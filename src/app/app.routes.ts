@@ -1,3 +1,24 @@
 import { Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { CitizenRegisterComponent } from './citizen-register/citizen-register.component';
+import { GovtRegisterComponent } from './govt-register/govt-register.component';
+import { ProjectsComponent } from './projects/projects.component';
+import { ProjectListingComponent } from './project-listing/project-listing.component';
+import { ProjectDetailsComponent } from './project-details/project-details.component';
+import { CreateProjectComponent } from './create-project/create-project.component';
+import { CitizenProjectsComponent } from './citizen-projects/citizen-projects.component';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+    {path:'', redirectTo:'home', pathMatch:'full'},
+    {path:'home', component: HomeComponent},
+    {path:'login', component: LoginComponent},
+    {path:'citizen-register', component: CitizenRegisterComponent},
+    {path:'govtEmp-register', component: GovtRegisterComponent},
+    {path:'projects', component: ProjectsComponent},
+    {path:'project-listing', component: ProjectListingComponent},
+    {path:'project-details', component: ProjectDetailsComponent},
+    {path:'new-project', component: CreateProjectComponent},
+    {path:'my-project', component: CitizenProjectsComponent},
+    {path: '**', component:HomeComponent}
+];
