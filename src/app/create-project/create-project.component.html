@@ -1,1 +1,42 @@
-<p>create-project works!</p>
+<div class="container">
+    <h1>New Project Form</h1>
+    <form>
+        <div class="form-group">
+          <label for="projectName">Project Name</label>
+          <input [(ngModel)]="newProjectObj.projectName" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="projectName" placeholder="Enter Project Name">
+        </div>
+        <div class="form-group">
+          <label for="projectDepartment">Select Project Department</label>
+          <select class="form-control" [(ngModel)]="newProjectObj.projectDepartmentId" [ngModelOptions]="{standalone: true}">
+            <option value="" selected >Select Department</option>
+            <option *ngFor="let dept of departmentList" [value]="dept.departmentId">{{dept.departmentName}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="projectAddress">Project Address</label>
+          <input [(ngModel)]="newProjectObj.projectAddress" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="projectAddress" placeholder="Enter Project Address">
+        </div>
+        <div class="form-group">
+          <label for="projectCity">Project City</label>
+          <input [(ngModel)]="newProjectObj.projectCity" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="projectCity" placeholder="Enter Project City">
+        </div>
+        <div class="form-group">
+          <label for="projectState">Project State</label>
+          <input [(ngModel)]="newProjectObj.projectState" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="projectState" placeholder="Enter Project State">
+        </div>
+        <div class="form-group">
+          <label for="projectDuration">Project Duration</label>
+          <input [(ngModel)]="newProjectObj.projectDuration" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="projectDuration" placeholder="Enter Project Duration">
+        </div>
+        <div class="form-group">
+          <label for="projectBudget">Project Budget</label>
+          <input [(ngModel)]="newProjectObj.projectBudget" [ngModelOptions]="{standalone: true}" type="text" class="form-control" id="projectBudget" placeholder="Enter Project Budget">
+        </div>
+        
+        <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">I agree to terms & conditions</label>
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="onCreateProject()">Submit</button>
+      </form>
+</div>

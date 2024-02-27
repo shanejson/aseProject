@@ -1,1 +1,18 @@
-<p>login works!</p>
+<div class="container">
+    <h2>Login </h2>
+<form>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input [(ngModel)]="loginObj.email" [ngModelOptions]="{standalone: true}" type="text" class="form-control" name="email" placeholder="Enter email">
+    </div>
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input [(ngModel)]="loginObj.password" [ngModelOptions]="{standalone: true}" type="password" class="form-control" name="password" placeholder="Password">
+    </div>
+    <!-- <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+    </div> -->
+    <button type="submit" class="btn btn-primary" (click)="onLogin()">Submit</button>
+  </form>
+</div>

@@ -9,6 +9,7 @@ import { ProjectDetailsComponent } from './project-details/project-details.compo
 import { ProjectListingComponent } from './project-listing/project-listing.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { CitizenProjectsComponent } from './citizen-projects/citizen-projects.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -24,11 +25,28 @@ import { CitizenProjectsComponent } from './citizen-projects/citizen-projects.co
     ProjectDetailsComponent,
     ProjectListingComponent,
     ProjectsComponent,
-    CitizenProjectsComponent
+    CitizenProjectsComponent,
+    CommonModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'aseProject';
+  isLoggedIn:boolean = false;
+  userInfo: any;
+
+  constructor(){
+    const loginDetails = localStorage.getItem('loggedIn');
+    if(loginDetails == null){
+      this.isLoggedIn = false;
+    }else{
+      this.userInfo = JSON.parse(loginDetails);
+      this.isLoggedIn = true;
+    }
+  }
+
+  onLogout(){
+    this.isLoggedIn = false;
+    localStorage.removeItem('loggedIn')
+  }
 }

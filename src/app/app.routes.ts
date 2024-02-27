@@ -17,7 +17,7 @@ export const routes: Routes = [
     {path:'govtEmp-register', component: GovtRegisterComponent},
     {path:'projects', component: ProjectsComponent},
     {path:'project-listing', component: ProjectListingComponent},
-    {path:'project-details', component: ProjectDetailsComponent},
+    {path:'project-detail/:projectId', component: ProjectDetailsComponent},
     {path:'new-project', component: CreateProjectComponent},
     {path:'my-project', component: CitizenProjectsComponent},
     {path: '**', component:HomeComponent}
