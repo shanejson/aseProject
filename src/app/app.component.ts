@@ -14,7 +14,19 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { OpinionModalComponent } from './opinion-modal/opinion-modal.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { CitizenActivityComponent } from './citizen-activity/citizen-activity.component';
+import { GovtDashboardComponent } from './govt-dashboard/govt-dashboard.component';
+import {
+  MatDialog,
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogModule
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-root',
@@ -35,7 +47,11 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     NgMultiSelectDropDownModule,
     FontAwesomeModule,
     OpinionModalComponent,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    ReactiveFormsModule,
+    CitizenActivityComponent,
+    GovtDashboardComponent,
+    MatDialogModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

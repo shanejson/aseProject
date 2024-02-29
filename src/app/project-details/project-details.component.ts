@@ -3,6 +3,8 @@ import { ProjectService } from '../service/project.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { OpinionModalComponent } from '../opinion-modal/opinion-modal.component';
 
 @Component({
   selector: 'app-project-details',
@@ -26,7 +28,7 @@ export class ProjectDetailsComponent {
   projectList:any
   projectDetails:any
 
-  constructor(private activatedRouted: ActivatedRoute, private _projectService: ProjectService, private router: Router) {
+  constructor(private activatedRouted: ActivatedRoute, private _projectService: ProjectService, private router: Router, public dialog: MatDialog) {
 
     /* const loginDetails = localStorage.getItem('loggedIn');
     if(loginDetails == null){
@@ -62,6 +64,30 @@ export class ProjectDetailsComponent {
 
   cancelOpinion(){
     this.giveOpinion = false;
+  }
+
+  openOpinionDialog(){
+    var _popup = this.dialog.open(OpinionModalComponent, {
+      width: '60%',
+      data: {
+        title: "Share an anonymous opinion",
+        projectDetails: this.projectDetails
+      }
+    })
+
+    _popup.afterClosed().subscribe((item:any)=>{
+      console.log("Item: ", item)
+      console.log(this.projectList)
+      var FoundIndex = this.projectList.findIndex((x:any)=>x.id == item.id)
+      console.log("Index", FoundIndex)
+      this.projectList[FoundIndex] = item
+      console.log(this.projectList)
+      localStorage.setItem('projects', JSON.stringify(this.projectList));
+      /* const ObjectToReplace = this.projectList.find((x:any)=>{
+        x.id == item.id
+      })
+      console.log("Object To Replace:", ObjectToReplace) */
+    })
   }
 
 }

@@ -8,6 +8,8 @@ import { ProjectListingComponent } from './project-listing/project-listing.compo
 import { ProjectDetailsComponent } from './project-details/project-details.component';
 import { CreateProjectComponent } from './create-project/create-project.component';
 import { CitizenProjectsComponent } from './citizen-projects/citizen-projects.component';
+import { CitizenActivityComponent } from './citizen-activity/citizen-activity.component';
+import { GovtDashboardComponent } from './govt-dashboard/govt-dashboard.component';
 
 export const routes: Routes = [
     {path:'', redirectTo:'home', pathMatch:'full'},
@@ -20,5 +22,7 @@ export const routes: Routes = [
     {path:'project-detail/:projectId', component: ProjectDetailsComponent},
     {path:'new-project', component: CreateProjectComponent},
     {path:'my-project', component: CitizenProjectsComponent},
+    {path: 'my-activity', component: CitizenActivityComponent},
+    {path: 'govt-dashboard', component: GovtDashboardComponent},
     {path: '**', component:HomeComponent}
 ];

@@ -23,6 +23,7 @@
     "@fortawesome/angular-fontawesome": "^0.14.1",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@rxweb/reactive-form-validators": "^13.0.1",
     "bootstrap": "^5.3.3",
     "ng-multiselect-dropdown": "^1.0.0",
     "rxjs": "~7.8.0",

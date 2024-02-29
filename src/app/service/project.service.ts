@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +42,7 @@ export class ProjectService {
   }
 
   submitOpinion(obj:any){
-    return this.http.post("API_END_POINT", obj)
+    //return this.http.post("API_END_POINT", obj)
   }
 
 
