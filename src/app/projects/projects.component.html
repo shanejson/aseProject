@@ -1,75 +1,153 @@
-
-    <div class="container-fluid pt-3 ">
-        <div class="row">
-            <div class="col-3 filter">
-                <div class="card">
-                    <div class="card-body">
-                        <h6 class="text-center">All Filter</h6>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6  project">
-                <div class="row pt-2" *ngFor="let project of projectList">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body" (click)="openProject(project.projectId)">
-                                
-                                    <div class="row">
-                                        <div class="col-8">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <h6 style="margin-bottom: 0;">{{project.projectName}}
-                                                    </h6>
-                                                   Created At: {{project.projectCreatedDate}}
-                                                   <br>Created By: {{project.projectCreatedBy}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-4 text-end">
-                                            <!-- <img class="compo_logo" src="/images/247012.png" alt=""> -->
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <i class="fa fa-suitcase" aria-hidden="true"></i> {{project.projectCity}}
-                                        </div>
-                                        <div class="col-4">
-                                            <i class="fa fa-inr" aria-hidden="true"></i> ${{project.projectBudget}}
-                                        </div>
-                                        <div class="col-4">
-                                            <i class="fa fa-map-marker" aria-hidden="true"></i> {{project.projectDuration}}
-                                        </div>
-                                    </div>
-                                    <div class="row pt-1">
-                                        <div class="col-12">
-                                            <i class="fa fa-file-text-o" aria-hidden="true"></i> <span
-                                                class="text-muted">{{project.projectDescription | slice:0-100}}.... ReadMore</span>
-                                        </div>
-                                    </div>
-                                    <div class="row pt-1">
-                                        <div class="col-6">
-                                            <button>Give Opinion</button>
-                                        </div>
-                                        <div class="col-6 text-end">
-                                            <i class="fa fa-bookmark" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                            
-
-
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="col-3 filter">
+<div class="container-fluid pt-3 ">
+    <div class="row">
+        <div class="col-8  project">
+            <div class="row pt-2" *ngFor="let project of projectList">
+                <div class="col-12">
                     <div class="card">
-                        <div class="card-body">
-                            <h6 class="text-center">Top Companies Hiring</h6>
+                        <div class="card-body" ><!-- (click)="openProject(project.id)" -->
+                            <div class="row">
+                                <div>
+                                    <span *ngIf="project.IsActive == true" class="badge bg-success">Active</span>
+                                    <span *ngIf="project.IsActive == false" class="badge bg-secondary">In-Active</span>
+                                </div>
+                                
+                                <div class="col-6">
+                                    
+                                    <b>Project: </b> {{project?.name}}
+                                </div>
+                                <div class="col-6 text-end">
+                                    
+                                    <!--  -->
+                                    <a [routerLink]="'/project-detail/'+project.id">
+                                        <fa-icon [icon]="faArrowUp"></fa-icon>
+                                    </a>
+                                    
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-4">
+                                    <b>Department</b>: {{ project?.department }}
+                                </div>
+                                <div class="col-4">
+                                    <b>City</b>: {{ project?.city }}
+                                </div>
+                                <div class="col-4">
+                                    <b>Budget</b>: € {{ project?.budget }}
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <b>Description: </b>
+                                    <i class="fa fa-file-text-o" aria-hidden="true"></i> 
+                                    <span class="text-muted">{{project?.description | slice:0-300}}....<a [routerLink]="'/project-detail/'+project.id" >Read More</a></span>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <b>Start Date: </b> {{project?.projectStartDate | date}}
+                                    <br>
+                                    <b>Duration: </b> {{project?.duration }}
+                                    
+                                </div>
+                                <div class="col-6 text-end">
+                                    <span class="badge bg-secondary pe-auto" >
+                                        <fa-icon [icon]="faMessage"></fa-icon>
+                                        {{project?.opinions.length}}
+                                        
+                                    </span>
+                                    
+                                </div>
+                                
+                                
+                            </div>
+
+
+                            <!-- <div class="row">
+                                <div class="col-8">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h6 style="margin-bottom: 0;">{{project.projectName}}
+                                            </h6>
+                                            Created At: {{project.projectCreatedDate}}
+                                            <br>Created By: {{project.projectCreatedBy}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-end">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <i class="fa fa-suitcase" aria-hidden="true"></i> {{project.projectCity}}
+                                </div>
+                                <div class="col-4">
+                                    <i class="fa fa-inr" aria-hidden="true"></i> ${{project.projectBudget}}
+                                </div>
+                                <div class="col-4">
+                                    <i class="fa fa-map-marker" aria-hidden="true"></i> {{project.projectDuration}}
+                                </div>
+                            </div>
+                            <div class="row pt-1">
+                                <div class="col-12">
+                                    <i class="fa fa-file-text-o" aria-hidden="true"></i> <span
+                                        class="text-muted">{{project.projectDescription | slice:0-100}}....
+                                        ReadMore</span>
+                                </div>
+                            </div>
+                            <div class="row pt-1">
+                                <div class="col-6">
+                                    <button>Give Opinion</button>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <i class="fa fa-bookmark" aria-hidden="true"></i>
+                                </div>
+                            </div> -->
+
+
+
                         </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-4 filter">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-center">All Filter</h6>
+                    <div class="container">
+                        <form>
+                            <div class="form-group">
+                                <label class="mt-2" for="form">From</label>
+                                <input class="form-control" type="date" id="from" name="from" [(ngModel)]="fromDate"
+                                    [ngModelOptions]="{ standalone: true }">
+
+
+                                <label class="mt-2" for="name">Name</label>
+                                <ng-multiselect-dropdown [placeholder]="'custom placeholder'"
+                                    [settings]="dropdownSettings" [data]="dropdownList" [(ngModel)]="selectedItems"
+                                    [ngModelOptions]="{standalone: true}" (onSelect)="onItemSelect($event)"
+                                    (onSelectAll)="onSelectAll($event)">
+                                </ng-multiselect-dropdown>
+
+                                <label for="name" class="mt-2">Department</label>
+                                <ng-multiselect-dropdown [placeholder]="'custom placeholder'"
+                                    [settings]="dropdownSettings" [data]="dropdownList" [(ngModel)]="selectedItems"
+                                    [ngModelOptions]="{standalone: true}" (onSelect)="onItemSelect($event)"
+                                    (onSelectAll)="onSelectAll($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+
+                            <button type="button" class="btn btn-primary mt-2 mx-2"
+                                (click)="searchFilters()">Search</button>
+                            <button type="button" class="btn btn-danger mt-2 ">Reset</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
 
     </div>
+
+</div>

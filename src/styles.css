@@ -1,10 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+.fill { 
+    min-height: 100%;
+    height: 100%;
+}
 .round-button {
     border-radius: 30px;
 }
-.body-background {
+/* .body-background {
     background: #f7f6fb;
-}
+} */
 .header {
     margin: 0px 0 28px;
     display: flex;
@@ -128,3 +134,5 @@ input, select {
 .filter .card {
     border-radius: 10px;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: sans-serif; }

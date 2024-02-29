@@ -23,15 +23,21 @@ export class ProjectDetailsComponent {
   isLoggedIn:boolean = false
   giveOpinion:boolean = false;
 
+  projectList:any
+  projectDetails:any
+
   constructor(private activatedRouted: ActivatedRoute, private _projectService: ProjectService, private router: Router) {
 
-    const loginDetails = localStorage.getItem('loggedIn');
+    /* const loginDetails = localStorage.getItem('loggedIn');
     if(loginDetails == null){
       this.isLoggedIn = false;
     }else{
       this.userInfo = JSON.parse(loginDetails);
       this.isLoggedIn = true;
-    }
+    } */
+    let projectListX:any = localStorage.getItem('projects')
+    this.projectList = JSON.parse(projectListX)
+    console.log("Project List",this.projectList)
 
 
     this.activatedRouted.params.subscribe((res:any)=>{
@@ -47,21 +53,10 @@ export class ProjectDetailsComponent {
       this.projectObj = res.data
     }) */
 
-    this.projectObj = 
-      {
-        projectId: "13sd31",
-        projectName: "Test1",
-        projectDepartmentId: "101",
-        projectAddress: "Sandwich Street",
-        projectCity: "Windsor",
-        projectState: "Ontario",
-        projectDuration: "27 months",
-        projectBudget: "3000",
-        projectIsActive: true,
-        projectCreatedDate: '2024-02-27T04:13:52.014Z',
-        projectCreatedBy: "sheldon@gmail.com",
-        projectDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-      }
+    this.projectDetails = this.projectList.find((x:any)=>x.id == activeProjectId)
+    console.log("X-->",this.projectDetails)
+
+    
     
   }
 
