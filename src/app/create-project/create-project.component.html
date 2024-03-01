@@ -4,13 +4,15 @@
       Image
     </div>
     <div class="col-9">
-      <h1>New Project Form</h1>
-      <form>
-        <div class="form-group">
-          <label for="projectName">Project Name</label>
-          <input [(ngModel)]="newProjectObj.projectName" [ngModelOptions]="{standalone: true}" type="text"
-            class="form-control" id="projectName" placeholder="Enter Project Name">
+      <h3>Create a new Project</h3>
+      <form [formGroup]="newProjectForm">
+        <div class="form-group mt-2 ">
+          <label for="firstName">First Name</label>
+          <input type="text" formControlName="firstName" class="form-control" id="firstName" placeholder="Enter First Name">
+          <small class="text-danger" *ngIf="newProjectForm.get('firstName')?.invalid && newProjectForm.get('firstName')?.touched">First Name is required</small>
+  
         </div>
+
         <div class="form-group">
           <label for="projectDepartment">Select Project Department</label>
           <select class="form-control" [(ngModel)]="newProjectObj.projectDepartmentId"

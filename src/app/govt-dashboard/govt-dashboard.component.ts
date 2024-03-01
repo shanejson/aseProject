@@ -30,13 +30,13 @@ export class GovtDashboardComponent implements OnInit {
     // Retrieve data from local storage
     const projectsString = localStorage.getItem('projects');
 
-    if (projectsString !== null) {
-      // Parse the data if it's not null
-      const projects: Project[] = JSON.parse(projectsString);
+    // if (projectsString !== null) {
+    //   // Parse the data if it's not null
+    //   const projects: Project[] = JSON.parse(projectsString);
       
-      // Populate dropdownOptions array with id and name
-      this.dropdownOptions = projects.map((project: Project) => ({ id: project.id, name: project.name }));
-    }
+    //   // Populate dropdownOptions array with id and name
+    //   //this.dropdownOptions = projects.map((project: Project) => ({ id: project.id, name: project.name }));
+    // }
   }
 
   showGraph() {

@@ -1,19 +1,25 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProjectService } from '../service/project.service';
+import { RxReactiveFormsModule, RxwebValidators } from '@rxweb/reactive-form-validators';
+import { cities } from '../constants/constants';
 
 @Component({
   selector: 'app-create-project',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    RxReactiveFormsModule,
   ],
   templateUrl: './create-project.component.html',
   styleUrl: './create-project.component.css'
 })
 export class CreateProjectComponent implements OnInit {
+
+  newProjectForm!: FormGroup
 
   newProjectObj: any = {
     projectName:"",
@@ -41,6 +47,18 @@ export class CreateProjectComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProjectDepartments();
+
+    this.newProjectForm = new FormGroup({
+      name: new FormControl('', [RxwebValidators.required()]),
+      department: new FormControl('', [RxwebValidators.required()]),
+      city: new FormControl([], [RxwebValidators.required()]),
+      duration:  new FormControl('', [RxwebValidators.required()]),
+      budget:  new FormControl('', [RxwebValidators.required()]),
+      IsActive:  new FormControl(true, [RxwebValidators.required()]),
+      projectStartDate: new FormControl('', [RxwebValidators.required()]),
+      description: new FormControl('', [RxwebValidators.required()]),
+      createdDate: new FormControl(new Date().toISOString())
+    })
   }
 
   getProjectDepartments(){
@@ -55,15 +73,15 @@ export class CreateProjectComponent implements OnInit {
   }
 
   onCreateProject(){
-    console.log(this.newProjectObj)
+    
 
-    this._projectService.createNewProject(this.newProjectObj).subscribe((res:any)=>{
+    /* this._projectService.createNewProject(this.newProjectObj).subscribe((res:any)=>{
       if(res.status == 'ok'){
         alert("Project created succesfully.")
       }else{
         alert("Project could not be created.")
       }
-    })
+    }) */
   }
 
 }

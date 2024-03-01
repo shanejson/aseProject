@@ -4,7 +4,7 @@
             <div class="row pt-2" *ngFor="let project of projectList">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body" ><!-- (click)="openProject(project.id)" -->
+                        <div class="card-body">
                             <div class="row">
                                 <div>
                                     <span *ngIf="project.IsActive == true" class="badge bg-success">Active</span>
@@ -45,7 +45,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-6">
-                                    <b>Start Date: </b> {{project?.projectStartDate | date}}
+                                    <b>Project Start: </b> {{project?.projectStartDate | date}}
                                     <br>
                                     <b>Duration: </b> {{project?.duration }}
                                     
