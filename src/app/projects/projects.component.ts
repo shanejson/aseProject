@@ -39,7 +39,7 @@ export class ProjectsComponent implements OnInit {
   filterProjectPayload:any = {
     fromDate:"",
     toDate: "",
-    department: "",
+    department: " ",
     name: ""
   }
   
@@ -53,7 +53,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   loadProjects() {
-    this._projectService.getProjects({nsp:'ase'}).subscribe((res:any)=>{
+    /* this._projectService.getProjects({nsp:'ase'}).subscribe((res:any)=>{
       if(res.status == 'ok'){
         this.projectList = res.data;
       }else{
@@ -162,11 +162,12 @@ export class ProjectsComponent implements OnInit {
           }
         ]
       }
-    })
+    }) */
 
-    /* let projectListX:any = localStorage.getItem('projects')
+    //INcase API does not work
+    let projectListX:any = localStorage.getItem('projects')
     this.projectList = JSON.parse(projectListX)
-    console.log("Project List",this.projectList) */
+    console.log("Project List",this.projectList)
   }
 
   openProject(id:number){

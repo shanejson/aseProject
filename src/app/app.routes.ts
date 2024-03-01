@@ -12,7 +12,7 @@ import { CitizenActivityComponent } from './citizen-activity/citizen-activity.co
 import { GovtDashboardComponent } from './govt-dashboard/govt-dashboard.component';
 
 export const routes: Routes = [
-    {path:'', redirectTo:'home', pathMatch:'full'},
+    {path:'', redirectTo:'projects', pathMatch:'full'},
     {path:'home', component: HomeComponent},
     {path:'login', component: LoginComponent},
     {path:'citizen-register', component: CitizenRegisterComponent},

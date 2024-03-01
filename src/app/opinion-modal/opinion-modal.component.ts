@@ -44,7 +44,7 @@ export class OpinionModalComponent implements OnInit{
     console.log(this.inputData)
 
     this.opinionForm = new FormGroup({
-      'opinion': new FormControl('excellent', [RxwebValidators.required()]),
+      'opinion': new FormControl('Excellent', [RxwebValidators.required()]),
       'message': new FormControl(''),
       'date': new FormControl(new Date().toISOString())
     })
