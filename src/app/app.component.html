@@ -1,11 +1,11 @@
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
     <div class="container">
 
-        <a class="navbar-brand" routerLink="projects">
-            <!-- <img src="../assets/Sample_logo.png" alt="" class="d-inline-block align-text-top"> -->
+        <!-- <a class="navbar-brand" routerLink="projects">
+            <img src="../assets/Sample_logo.png" alt="" class="d-inline-block align-text-top">
             TEAM14
 
-        </a>
+        </a> -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -30,10 +30,13 @@
 
             </ul>
             <form class="d-flex">
-                <!-- <button *ngIf="!isLoggedIn" class="btn btn-outline-primary round-button mx-2" type="button"
-                    routerLink="login">Login</button> -->
-                <button *ngIf="!isLoggedIn" class="btn btn-success round-button mx-2" type="button"
-                    routerLink="citizen-register">Register User</button>
+                <button class="btn btn-outline-primary round-button mx-2" type="button"
+                    routerLink="login">Login</button>
+
+
+                <button class="btn btn-success round-button mx-2" type="button" routerLink="citizen-register">Sign
+                    Up</button>
+
                 <button *ngIf="!isLoggedIn" class="btn btn-success round-button mx-2" type="button"
                     routerLink="govtEmp-register">Govt Employee User</button>
                 <button *ngIf="isLoggedIn" class="btn btn-link" type="button">{{userInfo.email}} </button>

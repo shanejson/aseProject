@@ -10,18 +10,18 @@
                                     <span *ngIf="project.IsActive == true" class="badge bg-success">Active</span>
                                     <span *ngIf="project.IsActive == false" class="badge bg-secondary">In-Active</span>
                                 </div>
-                                
+
                                 <div class="col-6">
-                                    
+
                                     <b>Project: </b> {{project?.name}}
                                 </div>
                                 <div class="col-6 text-end">
-                                    
+
                                     <!--  -->
                                     <a [routerLink]="'/project-detail/'+project.id">
                                         <fa-icon [icon]="faArrowUp"></fa-icon>
                                     </a>
-                                    
+
                                 </div>
                             </div>
                             <div class="row mt-2">
@@ -38,8 +38,9 @@
                             <div class="row mt-2">
                                 <div class="col-12">
                                     <b>Description: </b>
-                                    <i class="fa fa-file-text-o" aria-hidden="true"></i> 
-                                    <span class="text-muted">{{project?.description | slice:0-300}}....<a [routerLink]="'/project-detail/'+project.id" >Read More</a></span>
+                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                                    <span class="text-muted">{{project?.description | slice:0-300}}....<a
+                                            [routerLink]="'/project-detail/'+project.id">Read More</a></span>
                                     <hr>
                                 </div>
                             </div>
@@ -48,18 +49,18 @@
                                     <b>Project Start: </b> {{project?.projectStartDate | date}}
                                     <br>
                                     <b>Duration: </b> {{project?.duration }}
-                                    
+
                                 </div>
                                 <div class="col-6 text-end">
-                                    <span class="badge bg-secondary pe-auto" >
+                                    <span class="badge bg-secondary pe-auto">
                                         <fa-icon [icon]="faMessage"></fa-icon>
-                                        {{project?.opinions.length}}
-                                        
+                                        {{project?.opinions?.length}}
+
                                     </span>
-                                    
+
                                 </div>
-                                
-                                
+
+
                             </div>
 
 
@@ -119,24 +120,26 @@
                     <div class="container">
                         <form>
                             <div class="form-group">
-                                <label class="mt-2" for="form">From</label>
-                                <input class="form-control" type="date" id="from" name="from" [(ngModel)]="fromDate"
-                                    [ngModelOptions]="{ standalone: true }">
+                                <label class="mt-2" for="form">Project Start</label>
+                                <input class="form-control" type="date" id="from" name="from"
+                                    [(ngModel)]="filterProjectPayload.fromDate" [ngModelOptions]="{ standalone: true }">
+                            </div>
 
+                            <div class="form-group">
+                                <label class="mt-2" for="form">Project End</label>
+                                <input class="form-control" type="date" id="from" name="from"
+                                    [(ngModel)]="filterProjectPayload.toDate" [ngModelOptions]="{ standalone: true }">
+                            </div>
 
-                                <label class="mt-2" for="name">Name</label>
-                                <ng-multiselect-dropdown [placeholder]="'custom placeholder'"
-                                    [settings]="dropdownSettings" [data]="dropdownList" [(ngModel)]="selectedItems"
-                                    [ngModelOptions]="{standalone: true}" (onSelect)="onItemSelect($event)"
-                                    (onSelectAll)="onSelectAll($event)">
-                                </ng-multiselect-dropdown>
-
-                                <label for="name" class="mt-2">Department</label>
-                                <ng-multiselect-dropdown [placeholder]="'custom placeholder'"
-                                    [settings]="dropdownSettings" [data]="dropdownList" [(ngModel)]="selectedItems"
-                                    [ngModelOptions]="{standalone: true}" (onSelect)="onItemSelect($event)"
-                                    (onSelectAll)="onSelectAll($event)">
-                                </ng-multiselect-dropdown>
+                           
+                            <div class="form-group mt-2 ">
+                                <label for="department">Project Department</label>
+                                <select class="form-select" id="department"
+                                    [(ngModel)]="filterProjectPayload.department" [ngModelOptions]="{ standalone: true }">
+                                    <option selected disabled value=" ">Select Department</option>
+                                    <option *ngFor="let item of departmentList" [value]="item.name">{{item.name}}
+                                    </option>
+                                </select>
                             </div>
 
                             <button type="button" class="btn btn-primary mt-2 mx-2"

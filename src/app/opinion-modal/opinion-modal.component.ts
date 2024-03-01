@@ -55,7 +55,11 @@ export class OpinionModalComponent implements OnInit{
   submitOpinion(){
     console.log("Opinion Form: ", this.opinionForm.getRawValue())
     this.inputData.projectDetails.opinions.unshift(this.opinionForm.getRawValue())
-    console.log("Pushed!")
+    /* if(this.inputData.projectDetails.opinions.length !== undefined){
+      this.inputData.projectDetails.opinions.unshift(this.opinionForm.getRawValue())
+    }else{
+      this.inputData.projectDetails.opinions.push(this.opinionForm.getRawValue())
+    } */
     /* this._projectService.submitOpinion(this.opinionForm.getRawValue()).subscribe((res:any)=>{
       //this.projectObj = res.data
     }) */

@@ -4,6 +4,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { ProjectService } from '../service/project.service';
 import { RxReactiveFormsModule, RxwebValidators } from '@rxweb/reactive-form-validators';
 import { cities } from '../constants/constants';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-project',
@@ -19,7 +20,10 @@ import { cities } from '../constants/constants';
 })
 export class CreateProjectComponent implements OnInit {
 
+  cities:any = cities
+
   newProjectForm!: FormGroup
+  projectList:any
 
   newProjectObj: any = {
     projectName:"",
@@ -35,53 +39,50 @@ export class CreateProjectComponent implements OnInit {
     projectCreatedBy: ""
   }
 
-  departmentList: any[]= []
+  departmentList: any[] = [{name:'Transportation'}, {name:'Education'}, {name:'Crime'}, {name:'Environment'} ]
 
-  constructor(private _projectService: ProjectService){
-    const loginDetails = localStorage.getItem('loggedIn');
-    if(loginDetails != null){
-      const data = JSON.parse(loginDetails)
-      this.newProjectObj.projectCreatedBy = data.email
-    }
+  constructor(private _projectService: ProjectService, private router: Router){
+    
   }
 
   ngOnInit(): void {
-    this.getProjectDepartments();
+    //this.getProjectDepartments();
+
+    let projectListX:any = localStorage.getItem('projects')
+    this.projectList = JSON.parse(projectListX)
+    console.log("Project List",this.projectList)
 
     this.newProjectForm = new FormGroup({
       name: new FormControl('', [RxwebValidators.required()]),
-      department: new FormControl('', [RxwebValidators.required()]),
-      city: new FormControl([], [RxwebValidators.required()]),
+      department: new FormControl(null, [RxwebValidators.required()]),
+      city: new FormControl(null, [RxwebValidators.required()]),
       duration:  new FormControl('', [RxwebValidators.required()]),
       budget:  new FormControl('', [RxwebValidators.required()]),
-      IsActive:  new FormControl(true, [RxwebValidators.required()]),
       projectStartDate: new FormControl('', [RxwebValidators.required()]),
       description: new FormControl('', [RxwebValidators.required()]),
-      createdDate: new FormControl(new Date().toISOString())
+      createdDate: new FormControl(new Date().toISOString()),
+      projectId: new FormControl(Date.now()),
+      opinions: new FormControl([])
     })
   }
 
-  getProjectDepartments(){
-    /* this._projectService.getAllProjectDepartments().subscribe((res:any)=>{
-      this.categoryList = res.data;
-    }) */
-
-    this.departmentList = [
-      { departmentId: '101', departmentName: 'Engineering' },
-      { departmentId: '102', departmentName: 'Human Resource' },
-    ]
-  }
 
   onCreateProject(){
-    
-
-    /* this._projectService.createNewProject(this.newProjectObj).subscribe((res:any)=>{
+    console.log(this.newProjectForm.getRawValue())
+    let payLoad: any = this.newProjectForm.getRawValue()
+ 
+    this._projectService.createNewProject(payLoad).subscribe((res:any)=>{
       if(res.status == 'ok'){
         alert("Project created succesfully.")
+        this.router.navigate(['/projects'])
       }else{
         alert("Project could not be created.")
       }
-    }) */
+    })
+  }
+
+  reset(){
+    this.newProjectForm.reset({})
   }
 
 }

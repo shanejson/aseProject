@@ -33,12 +33,16 @@ export class ProjectService {
     return this.http.post("API_END_POINT", obj);
   }
 
-  getActiveProject(){
-    return this.http.get("API_END_POINT");
+  getProjects(obj:any){
+    return this.http.get("API_END_POINT", obj);
   }
 
   getProjectDetailById(projectId:number){
     return this.http.get("API_END_POINT?projectId="+ projectId);
+  }
+
+  getFilteredProjects(obj:any){
+    return this.http.get("API_END_POINT", obj);
   }
 
   submitOpinion(obj:any){
