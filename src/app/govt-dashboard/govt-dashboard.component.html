@@ -1,19 +1,12 @@
 <div class="container">
-    <div class="selection">
-      <div class="dropdown">
-        <select id="dropdownOptions" [(ngModel)]="selectedProjectId">
-          <option *ngFor="let project of dropdownOptions" [value]="project.id">{{ project.name }}</option>
-        </select>
-      </div>
-  
-      <button class="btn-show-graph" (click)="showGraph()">Show Graph</button>
+  <div class="graph-container">
+    <div id="graph" class="graph">
+      <!-- Bar Chart -->
+      <p-chart type="bar" [data]="barData" [options]="barOptions"></p-chart>
     </div>
-  
-    <div class="graph-container">
-      <div id="graph" class="graph">
-        <figure class="highcharts-figure">
-            <div id="container"></div>
-        </figure>
-      </div>
+    <div id="doughnutGraph" class="graph">
+      <!-- Doughnut Chart -->
+      <p-chart type="doughnut" [data]="doughnutData" [options]="doughnutOptions"></p-chart>
     </div>
   </div>
+</div>
