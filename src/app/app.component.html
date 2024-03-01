@@ -34,11 +34,11 @@
                     routerLink="login">Login</button>
 
 
-                <button class="btn btn-success round-button mx-2" type="button" routerLink="citizen-register">Sign
+                <button class="btn btn-success round-button mx-2" type="button" routerLink="citizen-register">User Sign
                     Up</button>
 
                 <button *ngIf="!isLoggedIn" class="btn btn-success round-button mx-2" type="button"
-                    routerLink="govtEmp-register">Govt Employee User</button>
+                    routerLink="govtEmp-register">Employee Sign Up</button>
                 <button *ngIf="isLoggedIn" class="btn btn-link" type="button">{{userInfo.email}} </button>
                 <button *ngIf="isLoggedIn" class="btn btn-outline-primary round-button mx-2" type="button"
                     (click)="onLogout()">Logout</button>

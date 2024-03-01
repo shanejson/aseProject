@@ -53,10 +53,11 @@ export class ProjectsComponent implements OnInit {
   }
 
   loadProjects() {
-    /* this._projectService.getProjects({nsp:'ase'}).subscribe((res:any)=>{
-      if(res.status == 'ok'){
+    this._projectService.getProjects().subscribe((res:any)=>{
+      /* if(res.status == '1'){
         this.projectList = res.data;
-      }else{
+      } */
+      /* else{
         this.projectList = [
           {
             id:'1243dsd3',
@@ -161,8 +162,8 @@ export class ProjectsComponent implements OnInit {
             ]
           }
         ]
-      }
-    }) */
+      } */
+    })
 
     //INcase API does not work
     let projectListX:any = localStorage.getItem('projects')

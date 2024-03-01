@@ -171,11 +171,11 @@ export class AppComponent {
   ]
 
   constructor() {
-    const projectDetails = localStorage.getItem('loggedIn');
+    /* const projectDetails = localStorage.getItem('loggedIn');
     if(projectDetails == null){
       localStorage.setItem('projects', JSON.stringify(this.projectList));
     }
-    
+     */
     localStorage.setItem('users', JSON.stringify(this.demoUsers));
 
     /* const loginDetails = localStorage.getItem('loggedIn');
