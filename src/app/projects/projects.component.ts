@@ -168,7 +168,6 @@ export class ProjectsComponent implements OnInit {
     //INcase API does not work
     let projectListX:any = localStorage.getItem('projects')
     this.projectList = JSON.parse(projectListX)
-    console.log("Project List",this.projectList)
   }
 
   openProject(id:number){
@@ -184,16 +183,15 @@ export class ProjectsComponent implements OnInit {
 
 
   searchFilters(){
-    console.log(this.filterProjectPayload)
 
-    this._projectService.getFilteredProjects(this.filterProjectPayload).subscribe((res:any)=>{
+    /* this._projectService.getFilteredProjects(this.filterProjectPayload).subscribe((res:any)=>{
       if(res.status == 'ok'){
         alert("Citizen Created Succesfully.")
         this.router.navigate(['/login'])
       }else{
         alert("Citizen Not Created Succesfully.")
       }
-    })
+    }) */
   }
 
 }

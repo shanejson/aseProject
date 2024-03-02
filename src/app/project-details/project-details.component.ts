@@ -39,7 +39,6 @@ export class ProjectDetailsComponent {
     } */
     let projectListX:any = localStorage.getItem('projects')
     this.projectList = JSON.parse(projectListX)
-    console.log("Project List",this.projectList)
 
 
     this.activatedRouted.params.subscribe((res:any)=>{
@@ -56,7 +55,6 @@ export class ProjectDetailsComponent {
     }) */
 
     this.projectDetails = this.projectList.find((x:any)=>x.id == activeProjectId)
-    console.log("X-->",this.projectDetails)
 
     
     
@@ -76,12 +74,8 @@ export class ProjectDetailsComponent {
     })
 
     _popup.afterClosed().subscribe((item:any)=>{
-      console.log("Item: ", item)
-      console.log(this.projectList)
       var FoundIndex = this.projectList.findIndex((x:any)=>x.id == item.id)
-      console.log("Index", FoundIndex)
       this.projectList[FoundIndex] = item
-      console.log(this.projectList)
       localStorage.setItem('projects', JSON.stringify(this.projectList));
       /* const ObjectToReplace = this.projectList.find((x:any)=>{
         x.id == item.id

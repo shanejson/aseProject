@@ -50,7 +50,6 @@ export class CreateProjectComponent implements OnInit {
 
     let projectListX:any = localStorage.getItem('projects')
     this.projectList = JSON.parse(projectListX)
-    console.log("Project List",this.projectList)
 
     this.newProjectForm = new FormGroup({
       name: new FormControl('', [RxwebValidators.required()]),
@@ -62,23 +61,28 @@ export class CreateProjectComponent implements OnInit {
       description: new FormControl('', [RxwebValidators.required()]),
       createdDate: new FormControl(new Date().toISOString()),
       projectId: new FormControl(Date.now()),
-      opinions: new FormControl([])
+      opinions: new FormControl([]),
+      id: new FormControl(Date.now().toString())
     })
   }
 
 
   onCreateProject(){
-    console.log(this.newProjectForm.getRawValue())
     let payLoad: any = this.newProjectForm.getRawValue()
- 
-    this._projectService.createNewProject(payLoad).subscribe((res:any)=>{
+
+    //this.projectList = JSON.parse(projectListX)
+    this.projectList.unshift(payLoad)
+    localStorage.setItem('projects', JSON.stringify(this.projectList));
+    alert("Project added succesfully.")
+    this.router.navigate(['/projects'])
+    /* this._projectService.createNewProject(payLoad).subscribe((res:any)=>{
       if(res.status == 'ok'){
         alert("Project created succesfully.")
         this.router.navigate(['/projects'])
       }else{
         alert("Project could not be created.")
       }
-    })
+    }) */
   }
 
   reset(){

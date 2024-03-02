@@ -29,7 +29,6 @@ export class GovtRegisterComponent {
   constructor(private _projectService: ProjectService){}
 
   registerGovtEmp(){
-    console.log(this.govtEmpObj)
     alert("Registered Succesfully.")
 
     /* this._projectService.registerGovtEmp(this.govtEmpObj).subscribe((res:any)=>{

@@ -176,6 +176,7 @@ export class AppComponent {
       localStorage.setItem('projects', JSON.stringify(this.projectList));
     }
      */
+    localStorage.setItem('projects', JSON.stringify(this.projectList));
     localStorage.setItem('users', JSON.stringify(this.demoUsers));
 
     /* const loginDetails = localStorage.getItem('loggedIn');

@@ -41,7 +41,6 @@ export class OpinionModalComponent implements OnInit{
 
   ngOnInit(): void {
     this.inputData = this.data
-    console.log(this.inputData)
 
     this.opinionForm = new FormGroup({
       'opinion': new FormControl('Excellent', [RxwebValidators.required()]),
@@ -53,7 +52,6 @@ export class OpinionModalComponent implements OnInit{
   inputData:any;
 
   submitOpinion(){
-    console.log("Opinion Form: ", this.opinionForm.getRawValue())
     this.inputData.projectDetails.opinions.unshift(this.opinionForm.getRawValue())
     /* if(this.inputData.projectDetails.opinions.length !== undefined){
       this.inputData.projectDetails.opinions.unshift(this.opinionForm.getRawValue())
