@@ -27,6 +27,7 @@ import {
   MatDialogClose,
   MatDialogModule
 } from '@angular/material/dialog';
+import { QuizComponent } from './quiz/quiz.component';
 
 @Component({
   selector: 'app-root',
@@ -51,7 +52,8 @@ import {
     ReactiveFormsModule,
     CitizenActivityComponent,
     GovtDashboardComponent,
-    MatDialogModule
+    MatDialogModule,
+    QuizComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
