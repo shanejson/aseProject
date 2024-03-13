@@ -1,0 +1,76 @@
+
+.container-fluid {
+    padding-top: 3rem;
+  }
+  
+  .row {
+    margin-bottom: 2rem;
+  }
+  
+  h2 {
+    font-size: 2rem;
+    color: #333;
+  }
+  
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    margin: 20px;
+  }
+  
+  .card:hover {
+    box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.2);
+  }
+  
+  .card-body {
+    padding: 1.5rem;
+  }
+  
+  .badge {
+    margin-right: 0.5rem;
+  }
+  
+
+  .project {
+    padding: 0;
+    background-color: #f0f0f0;
+  }
+  
+  .project h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .project .row {
+    margin-bottom: 0;
+  }
+  
+  .project .card {
+    background-color: #f9f9f9;
+  }
+  
+  .project .card-body {
+    padding: 1.5rem;
+  }
+  
+  .filter {
+    padding: 0;
+    background-color: #f0f0f0;
+  }
+  
+  .filter h6 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .filter .card {
+    background-color: #f9f9f9;
+  }
+  
+  .filter .card-body {
+    padding: 1.5rem;
+    
+  }
+  

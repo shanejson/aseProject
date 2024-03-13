@@ -6,14 +6,17 @@
             <div class="row pt-2" *ngFor="let project of projectList">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-body">
-                            <div class="row">
+                        <div class="card-body" >
+                            
+                            <div class="row" style="background-color: rgb(145, 60, 45); color: aliceblue;border-radius: 0.5rem; " >
+                                
                                 <div>
+                                    
                                     <span *ngIf="project.IsActive == true" class="badge bg-success">Active</span>
                                     <span *ngIf="project.IsActive == false" class="badge bg-secondary">In-Active</span>
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-6" style="padding-top: 0.5rem; padding-bottom: 0.5rem;">
 
                                     <b>Project: </b> {{project?.name}}
                                 </div>
@@ -25,8 +28,10 @@
                                     </a>
 
                                 </div>
+                                
                             </div>
-                            <div class="row mt-2">
+<div>
+                            <div class="row mt-2" style="display: flex; justify-content: center;">
                                 <div class="col-4">
                                     <b>Department</b>: {{ project?.department }}
                                 </div>
@@ -61,6 +66,7 @@
                                     </span>
 
                                 </div>
+                                
 
 
                             </div>
@@ -143,10 +149,11 @@
                                     </option>
                                 </select>
                             </div>
-
+<div style="display: flex; justify-content: center; padding-top: 5%;">
                             <button type="button" class="btn btn-primary mt-2 mx-2"
                                 (click)="searchFilters()">Search</button>
                             <button type="button" class="btn btn-danger mt-2 ">Reset</button>
+                        </div>
                         </form>
                     </div>
                 </div>
