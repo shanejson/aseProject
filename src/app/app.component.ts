@@ -28,6 +28,8 @@ import {
   MatDialogModule
 } from '@angular/material/dialog';
 import { QuizComponent } from './quiz/quiz.component';
+import { QuizQuestionsComponent } from './quiz-questions/quiz-questions.component';
+import { QuizResultComponent } from './quiz-result/quiz-result.component';
 
 @Component({
   selector: 'app-root',
@@ -53,7 +55,9 @@ import { QuizComponent } from './quiz/quiz.component';
     CitizenActivityComponent,
     GovtDashboardComponent,
     MatDialogModule,
-    QuizComponent
+    QuizComponent,
+    QuizQuestionsComponent,
+    QuizResultComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
