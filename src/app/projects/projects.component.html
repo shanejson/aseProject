@@ -1,8 +1,6 @@
-<div class="container-fluid pt-3">
+<div class="container-fluid pt-5" style="background-color: #f1f5f9">
   <div class="row">
-    <h2>Projects</h2>
     <div class="col-8 project">
-      <h2>TEe3ST</h2>
       <div class="row pt-5" *ngFor="let project of projectList">
         <div class="col-12">
           <div class="card">
@@ -24,7 +22,10 @@
                 <div class="col-10"><b>Project: </b> {{ project?.name }}</div>
                 <div class="col-1 text-end">
                   <!--  -->
-                  <a [routerLink]="'/project-detail/' + project.id">
+                  <a
+                    [routerLink]="'/project-detail/' + project.id"
+                    style="color: white"
+                  >
                     <fa-icon [icon]="faArrowUp"></fa-icon>
                   </a>
                 </div>
@@ -108,10 +109,10 @@
         </div>
       </div>
     </div>
-    <div class="col-4 filter">
+    <div class="col-4 filter pt-5">
       <div class="card">
         <div class="card-body">
-          <h6 class="text-center">All Filter</h6>
+          <h4 class="text-center">All Filter</h4>
           <div class="container">
             <form>
               <div class="form-group">
