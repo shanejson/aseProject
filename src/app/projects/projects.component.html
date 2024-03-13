@@ -1,72 +1,69 @@
-<div class="container-fluid pt-3 ">
-    <div class="row">
-        <h2>Projects</h2>
-        <div class="col-8  project">
-            <h2>TEe3ST</h2>
-            <div class="row pt-2" *ngFor="let project of projectList">
+<div class="container-fluid pt-3">
+  <div class="row">
+    <h2>Projects</h2>
+    <div class="col-8 project">
+      <h2>TEe3ST</h2>
+      <div class="row pt-5" *ngFor="let project of projectList">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="row card-header card-header-danger">
+                <div class="col-1">
+                  <span
+                    *ngIf="project.IsActive == true"
+                    class="badge bg-success"
+                    >Active</span
+                  >
+                  <span
+                    *ngIf="project.IsActive == false"
+                    class="badge bg-secondary"
+                    >In-Active</span
+                  >
+                </div>
+
+                <div class="col-10"><b>Project: </b> {{ project?.name }}</div>
+                <div class="col-1 text-end">
+                  <!--  -->
+                  <a [routerLink]="'/project-detail/' + project.id">
+                    <fa-icon [icon]="faArrowUp"></fa-icon>
+                  </a>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-4">
+                  <b>Department</b>: {{ project?.department }}
+                </div>
+                <div class="col-4"><b>City</b>: {{ project?.city }}</div>
+                <div class="col-4"><b>Budget</b>: € {{ project?.budget }}</div>
+              </div>
+              <div class="row mt-2">
                 <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div>
-                                    <span *ngIf="project.IsActive == true" class="badge bg-success">Active</span>
-                                    <span *ngIf="project.IsActive == false" class="badge bg-secondary">In-Active</span>
-                                </div>
+                  <b>Description: </b>
+                  <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  <span class="text-muted"
+                    >{{ project?.description | slice : 0 - 300 }}....<a
+                      [routerLink]="'/project-detail/' + project.id"
+                      >Read More</a
+                    ></span
+                  >
+                  <hr />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <b>Project Start: </b> {{ project?.projectStartDate | date }}
+                  <br />
+                  <b>Duration: </b> {{ project?.duration }}
+                </div>
+                <div class="col-6 text-end">
+                  <span class="badge bg-secondary pe-auto">
+                    <fa-icon [icon]="faMessage"></fa-icon>
+                    {{ project?.opinions?.length }}
+                  </span>
+                </div>
+              </div>
 
-                                <div class="col-6">
-
-                                    <b>Project: </b> {{project?.name}}
-                                </div>
-                                <div class="col-6 text-end">
-
-                                    <!--  -->
-                                    <a [routerLink]="'/project-detail/'+project.id">
-                                        <fa-icon [icon]="faArrowUp"></fa-icon>
-                                    </a>
-
-                                </div>
-                            </div>
-                            <div class="row mt-2">
-                                <div class="col-4">
-                                    <b>Department</b>: {{ project?.department }}
-                                </div>
-                                <div class="col-4">
-                                    <b>City</b>: {{ project?.city }}
-                                </div>
-                                <div class="col-4">
-                                    <b>Budget</b>: € {{ project?.budget }}
-                                </div>
-                            </div>
-                            <div class="row mt-2">
-                                <div class="col-12">
-                                    <b>Description: </b>
-                                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                                    <span class="text-muted">{{project?.description | slice:0-300}}....<a
-                                            [routerLink]="'/project-detail/'+project.id">Read More</a></span>
-                                    <hr>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <b>Project Start: </b> {{project?.projectStartDate | date}}
-                                    <br>
-                                    <b>Duration: </b> {{project?.duration }}
-
-                                </div>
-                                <div class="col-6 text-end">
-                                    <span class="badge bg-secondary pe-auto">
-                                        <fa-icon [icon]="faMessage"></fa-icon>
-                                        {{project?.opinions?.length}}
-
-                                    </span>
-
-                                </div>
-
-
-                            </div>
-
-
-                            <!-- <div class="row">
+              <!-- <div class="row">
                                 <div class="col-8">
                                     <div class="row">
                                         <div class="col-12">
@@ -106,53 +103,72 @@
                                     <i class="fa fa-bookmark" aria-hidden="true"></i>
                                 </div>
                             </div> -->
-
-
-
-                        </div>
-                    </div>
-                </div>
-
             </div>
+          </div>
         </div>
-        <div class="col-4 filter">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="text-center">All Filter</h6>
-                    <div class="container">
-                        <form>
-                            <div class="form-group">
-                                <label class="mt-2" for="form">Project Start</label>
-                                <input class="form-control" type="date" id="from" name="from"
-                                    [(ngModel)]="filterProjectPayload.fromDate" [ngModelOptions]="{ standalone: true }">
-                            </div>
-
-                            <div class="form-group">
-                                <label class="mt-2" for="form">Project End</label>
-                                <input class="form-control" type="date" id="from" name="from"
-                                    [(ngModel)]="filterProjectPayload.toDate" [ngModelOptions]="{ standalone: true }">
-                            </div>
-
-                           
-                            <div class="form-group mt-2 ">
-                                <label for="department">Project Department</label>
-                                <select class="form-select" id="department"
-                                    [(ngModel)]="filterProjectPayload.department" [ngModelOptions]="{ standalone: true }">
-                                    <option selected disabled value=" ">Select Department</option>
-                                    <option *ngFor="let item of departmentList" [value]="item.name">{{item.name}}
-                                    </option>
-                                </select>
-                            </div>
-
-                            <button type="button" class="btn btn-primary mt-2 mx-2"
-                                (click)="searchFilters()">Search</button>
-                            <button type="button" class="btn btn-danger mt-2 ">Reset</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+      </div>
     </div>
+    <div class="col-4 filter">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="text-center">All Filter</h6>
+          <div class="container">
+            <form>
+              <div class="form-group">
+                <label class="mt-2" for="form">Project Start</label>
+                <input
+                  class="form-control"
+                  type="date"
+                  id="from"
+                  name="from"
+                  [(ngModel)]="filterProjectPayload.fromDate"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </div>
 
+              <div class="form-group">
+                <label class="mt-2" for="form">Project End</label>
+                <input
+                  class="form-control"
+                  type="date"
+                  id="from"
+                  name="from"
+                  [(ngModel)]="filterProjectPayload.toDate"
+                  [ngModelOptions]="{ standalone: true }"
+                />
+              </div>
+
+              <div class="form-group mt-2">
+                <label for="department">Project Department</label>
+                <select
+                  class="form-select"
+                  id="department"
+                  [(ngModel)]="filterProjectPayload.department"
+                  [ngModelOptions]="{ standalone: true }"
+                >
+                  <option selected disabled value=" ">Select Department</option>
+                  <option
+                    *ngFor="let item of departmentList"
+                    [value]="item.name"
+                  >
+                    {{ item.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="btns">
+                <button
+                  type="button"
+                  class="btn btn-primary mt-2 mx-2"
+                  (click)="searchFilters()"
+                >
+                  Search
+                </button>
+                <button type="button" class="btn btn-danger mt-2">Reset</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
