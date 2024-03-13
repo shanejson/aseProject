@@ -1,14 +1,20 @@
 <div id="quiz" class="section">
     <div class="section-center">
-        <div class="container">
+        <div class="card container">
+           
             <app-quiz-questions #quiz [style.display]="(showQuizScreen)?'block':'none'"  (finalResult)="finalResult($event)"></app-quiz-questions>
             <app-quiz-result #result [style.display]="(showResultScreen)?'block':'none'" (showMainMenuScreen)="showMainMenuScreen($event)"></app-quiz-result>
             
             <div [style.display]="(showMainMenu)?'block':'none'" class="row justify-content-md-center">
-                <div class="col-md-6 mx-auto">
+                <!-- <div class="col-md-6 mx-auto"> -->
                     <div class="quiz-form">
                         <div class="row">
                             <div class="col-md-12">
+
+                                <div class="card-header card-header-danger">
+                                    <h4 class="card-title">Select the quiz difficulty</h4>
+                                  </div>
+                                  
                                 <div class="form-group">
                                     <span class="form-label">Difficulty</span>
                                     <select class="form-control" [(ngModel)]="difficulty">
@@ -44,7 +50,7 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                <!-- </div> -->
             </div>
         </div>
     </div>
