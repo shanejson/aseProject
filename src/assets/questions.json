@@ -1,0 +1,99 @@
+[
+	{
+		"questionId":1,
+		"question": "What is the capital of France?",
+		"options":[
+			{
+				"answer":"Bordeaux",
+				"isCorrect": false
+			},
+			{
+				"answer":"Lyon",
+				"isCorrect": false
+			},
+			{
+				"answer":"Marseille",
+				"isCorrect": false
+			},
+			{
+				"answer":"Nice",
+				"isCorrect": false
+			},
+			{
+				"answer":"Paris",
+				"isCorrect": true
+			}
+		]
+	},
+	{
+		"questionId":2,
+		"question": "How many countries in the world speak French?",
+		"options":[
+			{
+				"answer":"5",
+				"isCorrect": false
+			},
+			{
+				"answer":"More than 20",
+				"isCorrect": true
+			},
+			{
+				"answer":"1",
+				"isCorrect": false
+			},
+			{
+				"answer":"16",
+				"isCorrect": false
+			},
+			{
+				"answer":"15",
+				"isCorrect": true
+			}
+		]
+	},
+	{
+		"questionId":3,
+		"question": "How do you say: Hello, my name is ...  in French?",
+		"options":[
+			{
+				"answer":"Bonjour, je m'appelle ...",
+				"isCorrect": true
+			},
+			{
+				"answer":"Au revoir, je m'appelle ...",
+				"isCorrect": false
+			},
+			{
+				"answer":"Bonjour, j'ai ...",
+				"isCorrect": false
+			},
+			{
+				"answer":"Au revoir, j'ai ...",
+				"isCorrect": false
+			}
+		]
+	},
+	{
+		"questionId":4,
+		"question": "Who leads the country in France?",
+		"options":[
+			{
+				"answer":"A Prime Minister",
+				"isCorrect": false
+			},
+			{
+				"answer":"A king or Queen",
+				"isCorrect": false
+			},
+			{
+				"answer":"A President",
+				"isCorrect": true
+			},
+			{
+				"answer":"A Member of Parliament",
+				"isCorrect": false
+			}
+
+		]
+	}
+]
