@@ -61,30 +61,30 @@
         </li>
       </ul>
       <form class="d-flex">
-        <button
+        <!-- <button
           class="btn btn-outline-primary round-button mx-2"
           type="button"
           routerLink="login"
         >
           Login
-        </button>
+        </button> -->
 
-        <button
+        <!-- <button
           class="btn btn-success round-button mx-2"
           type="button"
           routerLink="citizen-register"
         >
           User Sign Up
-        </button>
+        </button> -->
 
-        <button
+       <!--  <button
           *ngIf="!isLoggedIn"
           class="btn btn-success round-button mx-2"
           type="button"
           routerLink="govtEmp-register"
         >
           Employee Sign Up
-        </button>
+        </button> -->
         <button *ngIf="isLoggedIn" class="btn btn-link" type="button">
           {{ userInfo.email }}
         </button>
