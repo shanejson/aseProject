@@ -38,12 +38,16 @@ export class QuizComponent implements OnInit{
   
   @ViewChild('quiz',{static:true}) quiz! : QuizQuestionsComponent;
   @ViewChild('result',{static:true}) result! : QuizResultComponent;
+
+  quizQuestionList:any = []
  
 
   constructor(private quizService: QuizService){
     this.questionsLimit = 5;
     this.difficulty = "Easy";
-   this.showMainMenu = true;
+    this.showMainMenu = true;
+    let quizListX:any = localStorage.getItem('quizQuestionList');
+    this.quizQuestionList = JSON.parse(quizListX);
   }
   ngOnInit(): void {
     
@@ -52,8 +56,9 @@ export class QuizComponent implements OnInit{
   getQuizQuestions(){
     this.toggleSpinner();
     this.quizService.getQuizQuestions(this.difficulty, this.questionsLimit).subscribe((res:any)=>{
-      console.log("Response", res);
-      this.quiz.questions = res;
+      //console.log("Response", res);
+      //this.quiz.questions = res;
+      this.quiz.questions = this.quizQuestionList;
       this.quiz.reset();
       this.quiz.showQuestions(0);
       this.showMainMenu = false;

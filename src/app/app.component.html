@@ -1,105 +1,73 @@
-<nav
-  class="navbar fixed-top navbar-expand-lg navbar-light"
-  style="
-    background-color: #1455a3;
-    display: flex;
-    justify-content: space-between;
-  "
->
+<!-- Header -->
+<header>
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light">
+    <div class="container">
+      <!-- Navigation bar content -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLink="home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLink="quiz">Quiz </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLink="projects">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="" routerLink="/new-project">Create New Project</a>
+          </li>
+          <li class="nav-item">
+            <a class="" routerLink="/govt-dashboard">Dashboard</a>
+          </li>
+         <!--  <li class="nav-item">
+            <a class="" routerLink="/events">Events</a>
+          </li> -->
+        </ul>
+        <form class="d-flex">
+          <button *ngIf="isLoggedIn" class="btn btn-link" type="button">{{ userInfo.email }}</button>
+          <button *ngIf="isLoggedIn" class="btn btn-outline-primary round-button mx-2" type="button" (click)="onLogout()">Logout</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- Main content -->
+<main class="mt-5">
+  <div class="container-fluid body-background pt-5">
+    <router-outlet></router-outlet>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer>
   <div class="container">
-    <!-- <a class="navbar-brand" routerLink="projects">
-            <img src="../assets/Sample_logo.png" alt="" class="d-inline-block align-text-top">
-            TEAM14
-
-        </a> -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link text-white" aria-current="page" routerLink="home"
-            >Home</a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" aria-current="page" routerLink="quiz"
-            >Quiz</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link text-white"
-            aria-current="page"
-            routerLink="projects"
-            >Projects</a
-          >
-        </li>
-        <!-- <li class="nav-item">
-                    <a class="nav-link" routerLink="/project-listing">My Projects</a>
-                </li> -->
-        <li class="nav-item">
-          <a class="nav-link text-white" routerLink="/new-project"
-            >Create New Project</a
-          >
-        </li>
-        <!-- <li class="nav-item">
-                    <a class="nav-link" routerLink="/my-activity">My Activity</a>
-                </li> -->
-        <li class="nav-item">
-          <a class="nav-link text-white" routerLink="/govt-dashboard"
-            >Dashboard</a
-          >
-        </li>
-      </ul>
-      <form class="d-flex">
-        <!-- <button
-          class="btn btn-outline-primary round-button mx-2"
-          type="button"
-          routerLink="login"
-        >
-          Login
-        </button> -->
-
-        <!-- <button
-          class="btn btn-success round-button mx-2"
-          type="button"
-          routerLink="citizen-register"
-        >
-          User Sign Up
-        </button> -->
-
-       <!--  <button
-          *ngIf="!isLoggedIn"
-          class="btn btn-success round-button mx-2"
-          type="button"
-          routerLink="govtEmp-register"
-        >
-          Employee Sign Up
-        </button> -->
-        <button *ngIf="isLoggedIn" class="btn btn-link" type="button">
-          {{ userInfo.email }}
-        </button>
-        <button
-          *ngIf="isLoggedIn"
-          class="btn btn-outline-primary round-button mx-2"
-          type="button"
-          (click)="onLogout()"
-        >
-          Logout
-        </button>
-      </form>
+    <div class="row">
+      <div class="col-md-4">
+        <h5>Useful Links</h5>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">News</a></li>
+          <li><a href="#">About</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h5>Contact</h5>
+        <p>Address: 123 Republic Street, Paris</p>
+        <p>Phone: +33 1 23 45 67 89</p>
+        <p>Email: info&#64;government.fr</p>
+      </div>
+      <div class="col-md-4">
+        <h5>Legal Notice</h5>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </div>
     </div>
   </div>
-</nav>
-<div class="container-fluid body-background">
-  <router-outlet></router-outlet>
-</div>
+</footer>
+
