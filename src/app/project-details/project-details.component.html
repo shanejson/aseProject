@@ -1,27 +1,22 @@
 <div class="container-fluid body-background">
     <div class="container pt-5 ">
-        <div class="row">
+        <div class="row toop">
             <div class="col-8 project">
                 <div class="row pt-2" >
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="row">
+                                <div class="row patti">
                                     <div>
                                         <span *ngIf="projectDetails.IsActive == true" class="badge bg-success">Active</span>
                                         <span *ngIf="projectDetails.IsActive == false" class="badge bg-secondary">In-Active</span>
                                     </div>
                                     
-                                    <div class="col-6">
+                                    <div class="col-6 " >
                                         
                                         <b>Project: </b> {{projectDetails?.name}}
                                     </div>
-                                    <div class="col-6 text-end">
                                     
-                                        <!--  -->
-                                       <div class="btn btn-primary" (click)="openOpinionDialog()">Give Opinion</div>
-                                        
-                                    </div>
                                     
                                 </div>
                                 <div class="row mt-2">
@@ -44,10 +39,15 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-6 endd">
+                                        <div>
                                         <b>Start Date: </b> {{projectDetails?.projectStartDate | date}}
                                         <br>
                                         <b>Duration: </b> {{projectDetails?.duration }}
+                                            
+                                        </div>
+                                        
+                                        <div class="btn btn-primary" (click)="openOpinionDialog()">Give Opinion</div>
                                         
                                     </div>
                                     
