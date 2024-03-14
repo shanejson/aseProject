@@ -3,28 +3,37 @@
 }
 
 nav {
-  background-color: navy; /* Set navy blue background color for the navigation bar */
+  background-color: navy;
+  /* Set navy blue background color for the navigation bar */
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Add a subtle shadow */
 }
+
 nav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   text-align: center;
 }
+
 nav li {
   display: inline-block;
 }
+
 nav li a {
   display: block;
-  color: #fff; /* Set white text color */
-  padding: 20px 30px; /* Add more padding */
+  color: #fff;
+  /* Set white text color */
+  padding: 20px 30px;
+  /* Add more padding */
   text-decoration: none;
   transition: background-color 0.3s;
 }
+
 nav li a:hover {
-  background-color: #1455a3; /* Change background color on hover */
+  background-color: #1455a3;
+  /* Change background color on hover */
 }
 
 .logo-container {
@@ -35,17 +44,59 @@ nav li a:hover {
 .logo {
   font-size: 27px;
   font-weight: bold;
-  color: #ffffff; /* White */
+  color: #ffffff;
+  /* White */
 }
 
 .rounded-square {
   width: 120px;
   border-radius: 20px;
   background-color: transparent;
-  border: 3px solid #ff0000; /* Red */
+  border: 3px solid #ff0000;
+  /* Red */
   display: inline-flex;
   align-items: center;
   justify-content: center;
   margin: 10px;
   margin-bottom: 56px;
+}
+
+footer {
+  background-color: navy;
+  color: white;
+  padding: 10px 0;
+  margin-top: 1rem;
+}
+
+footer h5 {
+  color: white;
+}
+
+footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+footer ul li {
+  margin-bottom: 10px;
+}
+
+footer ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+footer p {
+  margin-bottom: 10px;
+}
+
+/* Adjustments for responsiveness */
+@media (max-width: 768px) {
+  footer {
+    padding: 20px 0;
+  }
+
+  footer h5 {
+    margin-top: 0;
+  }
 }
