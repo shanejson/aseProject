@@ -27,6 +27,10 @@ import {
   MatDialogClose,
   MatDialogModule
 } from '@angular/material/dialog';
+import { QuizComponent } from './quiz/quiz.component';
+import { QuizQuestionsComponent } from './quiz-questions/quiz-questions.component';
+import { QuizResultComponent } from './quiz-result/quiz-result.component';
+import { EventsComponent } from './events/events.component';
 
 @Component({
   selector: 'app-root',
@@ -51,7 +55,11 @@ import {
     ReactiveFormsModule,
     CitizenActivityComponent,
     GovtDashboardComponent,
-    MatDialogModule
+    MatDialogModule,
+    QuizComponent,
+    QuizQuestionsComponent,
+    QuizResultComponent,
+    EventsComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -171,6 +179,11 @@ export class AppComponent {
   ]
 
   constructor() {
+    /* const projectDetails = localStorage.getItem('loggedIn');
+    if(projectDetails == null){
+      localStorage.setItem('projects', JSON.stringify(this.projectList));
+    }
+     */
     localStorage.setItem('projects', JSON.stringify(this.projectList));
     localStorage.setItem('users', JSON.stringify(this.demoUsers));
 

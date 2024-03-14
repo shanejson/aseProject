@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -6,6 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProjectService {
+
+  private headers =  new HttpHeaders({
+    'ngrok-skip-browser-warning': '69420',
+  }) 
 
   constructor(private http: HttpClient) { }
 
@@ -33,12 +37,18 @@ export class ProjectService {
     return this.http.post("API_END_POINT", obj);
   }
 
-  getActiveProject(){
-    return this.http.get("API_END_POINT");
+  getProjects(){
+    //headers =  new HttpHeaders({'Content-Type': 'application/json'}) 
+    //return this.http.get("https://ecf5-137-207-232-214.ngrok-free.app/project/active", {headers: this.headers});
+    return this.http.get(`https://24a6-137-207-232-214.ngrok-free.app/project/active`)
   }
 
   getProjectDetailById(projectId:number){
     return this.http.get("API_END_POINT?projectId="+ projectId);
+  }
+
+  getFilteredProjects(obj:any){
+    return this.http.get("API_END_POINT", obj);
   }
 
   submitOpinion(obj:any){

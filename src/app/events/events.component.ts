@@ -3,11 +3,10 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faMessage, faUser,  } from '@fortawesome/free-solid-svg-icons';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-events',
   standalone: true,
   imports: [
     CommonModule,
@@ -16,10 +15,9 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     RouterLink,
     FontAwesomeModule
   ],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  templateUrl: './events.component.html',
+  styleUrl: './events.component.css'
 })
-export class HomeComponent {
-  faUser = faUser
-  
+export class EventsComponent {
+
 }

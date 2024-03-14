@@ -1,14 +1,26 @@
-<div class="container">
-    <h2>Login </h2>
-<form>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input [(ngModel)]="loginObj.email" [ngModelOptions]="{standalone: true}" type="text" class="form-control" name="email" placeholder="Enter email">
+<div class="container mt-2">
+  <h2>Login </h2>
+  <form [formGroup]="loginForm">
+
+    <!-- Email -->
+    <div class="form-group mt-2">
+      <label for="email">Email Address</label>
+      <input type="email" class="form-control" formControlName="email" id="email" placeholder="Enter Email Address">
+      <small class="text-danger" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">Enter a
+        Valid Email</small>
     </div>
+
+    <!-- Password -->
     <div class="form-group mt-2">
       <label for="password">Password</label>
-      <input [(ngModel)]="loginObj.password" [ngModelOptions]="{standalone: true}" type="password" class="form-control" name="password" placeholder="Password">
+      <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password">
+      <small class="text-danger"
+        *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"></small>
     </div>
+
     <button type="submit" class="btn btn-primary mt-2" (click)="onLogin()">Submit</button>
   </form>
+
+    <span>Don't have an account ? <a routerLink="/citizen-register">Sign Up</a></span>
+
 </div>
