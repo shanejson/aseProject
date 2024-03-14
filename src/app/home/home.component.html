@@ -2,30 +2,29 @@
     <div class="row pt-4">
         <!-- Tickets -->
         <div class="col-4" id="sidebar">
-            <div class="card">
+            <h3>Latest Events</h3>
+            <div class="card mb-2" *ngFor="let event of eventList">
                 <div class="card-body">
-                    <div>
+                    <div >
                         <div class="event-info" style="display: flex;">
                             <div style="width: 13%; margin-top: 12px;">
-                                <h1 style="margin-bottom: -7px;">23</h1>
+                                <h1 style="margin-bottom: -7px;">{{event.eventStart | date: 'dd' }}</h1>
                                 <h4>
-                                    MAR
+                                    {{event.eventStart | date: 'LLL' | uppercase}}
                                 </h4>
                             </div>
-
                             <div style="margin-left: 40px;">
-                                <p>Tom Alter and Dave Toennies</p>
-                                <p>Sat, 6:00–10:00 p.m.</p>
-                                <p>Infinity Hall and Sidebar</p>
+                                <p>{{event.eventName}}</p>
+                                <p>{{event.eventStart | date: 'shortTime' }} - {{event.eventEnd | date: 'shortTime' }}</p>
+                                <p>{{event.eventLocaion}}</p>
                             </div>
-
                         </div>
-
                         <div class="ticket-info">
-                            <button id="minus" onclick="decrease()">-</button>
-                            <input type="text" style="width: 32px;" id="quantity" value="0">
-                            <button id="plus" onclick="increase()">+</button>
-                            <button id="getTickets">Get Tickets</button>
+                            <button id="minus" (click)="decreasetTicket()">-</button>
+                            <button id="minus"><span id="quantity">{{ticketCount}}</span></button>
+                            <!-- <input type="text" style="width: 32px;" id="quantity" value="0"> -->
+                            <button id="plus" (click)="increasetTicket()">+</button>
+                            <button id="getTickets" (click)="getTickets(event)">Get Tickets</button>
                         </div>
                     </div>
                 </div>
@@ -33,8 +32,9 @@
         </div>
         <!-- Posts -->
         <div class="col-6">
+            
             <div class="container-fluid mt-10 " style="padding-top: 0">
-                
+                <h3>Posts</h3>
                 <div class="card mb-5" *ngFor="let post of postsList">
                     <div class="card-header">
                         <!-- <img src="https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_3.jpg"

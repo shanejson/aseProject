@@ -179,24 +179,24 @@ export class AppComponent {
     {
       postID: 2323,
       postAuthor: 'Jacques',
-      postDate: new Date(),
+      postDate: '2024-02-27T04:13:52.014Z',
       postDescription: "Did anyone notice, the road near Gilles Marchal was repaired, really fast.",
       postUpLikes: 10,
       postDownLikes: 0,
       postComments: [
         {
           commentAuthor: "Jean",
-          commentDate: new Date(),
+          commentDate: '2024-02-27T06:13:52.014Z',
           commentDescription: "Indeed, I noticed it was damaged in the morning, and then done up by the evening."
         },
         {
           commentAuthor: "Margaret",
-          commentDate: new Date(),
+          commentDate: '2024-02-27T08:13:52.014Z',
           commentDescription: "It was an actual problem earlier."
         },
         {
           commentAuthor: "Peter",
-          commentDate: new Date(),
+          commentDate: '2024-02-28T04:13:52.014Z',
           commentDescription: "That was certainly Fast!"
         }
       ]

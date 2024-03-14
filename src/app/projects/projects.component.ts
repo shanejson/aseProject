@@ -184,6 +184,15 @@ export class ProjectsComponent implements OnInit {
 
   searchFilters(){
 
+    console.log(this.filterProjectPayload)
+
+    let filteredProjectList = this.projectList.filter((x:any)=>{
+      return x.projectStartDate >= this.filterProjectPayload.fromDate || x.department == this.filterProjectPayload.department
+    })
+
+    console.log("--->", filteredProjectList);
+    
+    this.projectList = filteredProjectList
     /* this._projectService.getFilteredProjects(this.filterProjectPayload).subscribe((res:any)=>{
       if(res.status == 'ok'){
         alert("Citizen Created Succesfully.")
@@ -192,6 +201,10 @@ export class ProjectsComponent implements OnInit {
         alert("Citizen Not Created Succesfully.")
       }
     }) */
+  }
+
+  reset(){
+    this.loadProjects();
   }
 
 }

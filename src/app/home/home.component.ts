@@ -31,6 +31,39 @@ export class HomeComponent implements OnInit{
 
   postsList:any = [];
 
+ eventList: any = [
+    {
+      eventID: 2345,
+      eventStart: '2024-03-18T01:00:52.014Z',
+      eventEnd: '2024-03-18T04:00:52.014Z',
+      eventName: 'Tom Alter and Dave Toennies',
+      eventLocaion: 'Infinity Hall and Sidebar'
+    }/* ,
+    {
+      eventID: 4345,
+      eventStart: '2024-03-20T01:00:52.014Z',
+      eventEnd: '2024-03-20T04:00:52.014Z',
+      eventName: 'Paint & Tour',
+      eventLocaion: 'Infinity Hall and Sidebar'
+    },
+    {
+      eventID: 9687,
+      eventStart: '2024-03-22T01:00:52.014Z',
+      eventEnd: '2024-03-22T04:00:52.014Z',
+      eventName: "Let's talk shop.",
+      eventLocaion: 'Infinity Hall and Sidebar'
+    },
+    {
+      eventID: 3768,
+      eventStart: '2024-03-28T01:00:52.014Z',
+      eventEnd: '2024-03-28T04:00:52.014Z',
+      eventName: 'Community Game Night',
+      eventLocaion: 'Infinity Hall and Sidebar'
+    }, */
+  ]
+
+  ticketCount:any = 0
+
   constructor(public dialog: MatDialog){}
 
   ngOnInit(): void {
@@ -75,6 +108,26 @@ export class HomeComponent implements OnInit{
       })
       console.log("Object To Replace:", ObjectToReplace) */
     })
+  }
+
+  increasetTicket(){
+    
+    this.ticketCount++;
+  }
+
+  decreasetTicket(){
+    if(this.ticketCount > 0){
+      this.ticketCount--;
+    }
+    
+  }
+
+  getTickets(event:any){
+    if(this.ticketCount >0){
+      alert(this.ticketCount+ " ticket reserved for event: "+ event.eventName);
+      this.ticketCount = 0;
+    }
+    
   }
 
   
