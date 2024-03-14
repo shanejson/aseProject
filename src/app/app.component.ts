@@ -30,6 +30,7 @@ import {
 import { QuizComponent } from './quiz/quiz.component';
 import { QuizQuestionsComponent } from './quiz-questions/quiz-questions.component';
 import { QuizResultComponent } from './quiz-result/quiz-result.component';
+import { EventsComponent } from './events/events.component';
 
 @Component({
   selector: 'app-root',
@@ -57,7 +58,8 @@ import { QuizResultComponent } from './quiz-result/quiz-result.component';
     MatDialogModule,
     QuizComponent,
     QuizQuestionsComponent,
-    QuizResultComponent
+    QuizResultComponent,
+    EventsComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
