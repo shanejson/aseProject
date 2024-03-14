@@ -11,6 +11,7 @@ import { CitizenProjectsComponent } from './citizen-projects/citizen-projects.co
 import { CitizenActivityComponent } from './citizen-activity/citizen-activity.component';
 import { GovtDashboardComponent } from './govt-dashboard/govt-dashboard.component';
 import { QuizComponent } from './quiz/quiz.component';
+import { EventsComponent } from './events/events.component';
 
 export const routes: Routes = [
     {path:'', redirectTo:'home', pathMatch:'full'},
@@ -26,5 +27,6 @@ export const routes: Routes = [
     {path: 'my-activity', component: CitizenActivityComponent},
     {path: 'govt-dashboard', component: GovtDashboardComponent},
     {path: 'quiz', component: QuizComponent},
+    {path:'events', component: EventsComponent},
     {path: '**', component:HomeComponent}
 ];
