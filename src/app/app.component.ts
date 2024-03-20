@@ -424,7 +424,11 @@ export class AppComponent {
      */
     localStorage.setItem('projects', JSON.stringify(this.projectList));
     localStorage.setItem('users', JSON.stringify(this.demoUsers));
-    localStorage.setItem('postsList', JSON.stringify(this.postsList));
+    let postListX:any = localStorage.getItem('postsList');
+    if(postListX == null){
+      localStorage.setItem('postsList', JSON.stringify(this.postsList));
+    }
+    
     localStorage.setItem('quizQuestionList', JSON.stringify(this.quizQuestionList));
 
     /* const loginDetails = localStorage.getItem('loggedIn');

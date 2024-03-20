@@ -49,6 +49,7 @@ export class CreatePostModalComponent implements OnInit{
   submitPost(){
    // console.log(this.postForm.getRawValue())
     this.postsList.unshift(this.postForm.getRawValue())
+    localStorage.setItem('postsList', JSON.stringify(this.postsList));
     //console.log("Post List: ", this.postsList);
     //this.inputData.projectDetails.opinions.unshift(this.opinionForm.getRawValue())
     //this.inputData.projectDetails.opinions.unshift(this.opinionForm.getRawValue())

@@ -19,7 +19,7 @@ export class QuizService {
 
   getQuizQuestions(difficulty:any, limit:number):Observable<any>{
     let headers = {'X-Api-Key': "ZTFIoch3iDITxi0q6Yk294NHbvPz8P24bggcvtT0"};
-    return this.http.get(`${this.url}?difficulty=${difficulty}&limit=${limit}`, {headers: headers});
+    return this.http.get(`${this.url}?difficulty=${difficulty}&limit=${5}`, {headers: headers});
   }
 
   
