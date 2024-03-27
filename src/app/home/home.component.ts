@@ -68,7 +68,9 @@ export class HomeComponent implements OnInit{
 
   ngOnInit(): void {
     let postListX:any = localStorage.getItem('postsList');
+    console.log("Post List: ", postListX)
     this.postsList = JSON.parse(postListX);
+    console.log("Post List: ", this.postsList)
   }
 
   upLikePost(postID:any){

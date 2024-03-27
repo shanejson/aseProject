@@ -5,7 +5,7 @@
     </div> -->
     <div class="col-12 content">
       <div class="card-header card-header-danger">
-        <h4 class="card-title">Create a new Project</h4>
+        <h4 class="card-title">{{"Create a new Project" | translate}}</h4>
       </div>
 
       <form [formGroup]="newProjectForm">
@@ -24,7 +24,6 @@
           </select>
           <small class="text-danger" *ngIf="newProjectForm.get('department')?.invalid && newProjectForm.get('department')?.touched">Department is required</small>
         </div>
-
 
         <!-- City -->
         <div class="form-group mt-2 ">

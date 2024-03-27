@@ -1,5 +1,5 @@
 {
-    "Home":"Home",
+    "Home":"Maison",
     "Quiz":"Quiz",
     "Projects":"Projects",
     "Create New Project":"Create New Project",
@@ -15,7 +15,8 @@
     "About":"About",
     "Contact":"Contact",
     "Address: 123 Republic Street, Paris":"Address: 123 Republic Street, Paris",
-    "Phone":"Phone",
+    "Phone":"Téléphone",
     "Email":"Email",
-    "Legal Notice":"Legal Notice"
+    "Legal Notice":"Legal Notice",
+    "Create a new Project":"Create a new ProjectFr"
 }   
