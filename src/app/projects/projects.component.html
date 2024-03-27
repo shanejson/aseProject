@@ -1,13 +1,25 @@
 <div class="container-fluid " style="background-color: #f1f5f9"><!-- pt-5 -->
+  <div class="row">
+    <!-- <div class="alert alert-danger mt-2" *ngIf="allowedToVote">
+      Please login to vote
+    </div> -->
+    <div class="col-6">
+
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+        [(ngModel)]="searchProject">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="getSearchedProjects()">Search</button>
+
+    </div>
+  </div>
   <div class="row mt-0">
-    <div class="col-8 project">
+    <div class="col-9 project">
       <div class="row pt-5" *ngFor="let project of projectList">
         <div class="col-12">
           <div class="card">
             <div class="card-body">
               <div class="row card-header card-header-danger">
                 <div class="col-1">
-                  <span
+                  <!-- <span
                     *ngIf="project.IsActive == true"
                     class="badge bg-success"
                     >Active</span
@@ -16,17 +28,14 @@
                     *ngIf="project.IsActive == false"
                     class="badge bg-secondary"
                     >In-Active</span
-                  >
+                  > -->
                 </div>
 
                 <div class="col-10"><b>Project: </b> {{ project?.name }}</div>
                 <div class="col-1 text-end">
                   <!--  -->
-                  <a
-                    [routerLink]="'/project-detail/' + project.id"
-                    style="color: white"
-                  >
-                    <fa-icon [icon]="faArrowUp"></fa-icon>
+                  <a [routerLink]="'/project-detail/' + project.projectId" style="color: white">
+                    <fa-icon [icon]="faArrowUpRight"></fa-icon>
                   </a>
                 </div>
               </div>
@@ -40,13 +49,9 @@
               <div class="row mt-2">
                 <div class="col-12">
                   <b>Description: </b>
-                  <i class="fa fa-file-text-o" aria-hidden="true"></i>
-                  <span class="text-muted"
-                    >{{ project?.description | slice : 0 - 300 }}....<a
-                      [routerLink]="'/project-detail/' + project.id"
-                      >Read More</a
-                    ></span
-                  >
+                  <!-- <i class="fa fa-file-text-o" aria-hidden="true"></i> -->
+                  <span class="text-muted">{{ project?.description | slice : 0 - 300 }}....<a
+                      [routerLink]="'/project-detail/' + project.projectId">Read More</a></span>
                   <hr />
                 </div>
               </div>
@@ -57,9 +62,26 @@
                   <b>Duration: </b> {{ project?.duration }}
                 </div>
                 <div class="col-6 text-end">
+                  <!-- Up Vote -->
+                  <a (click)="upVoteProject(project.projectId)" style="cursor: pointer;">
+                    <fa-icon [icon]="faArrowUp" style="color:green"
+                      *ngIf="project.upVotes.includes(loggedInUserID)"></fa-icon>
+                    <fa-icon [icon]="faArrowUp" style="color:rgb(231, 229, 229)"
+                      *ngIf="!project.upVotes.includes(loggedInUserID)"></fa-icon>
+                  </a>
+                  <span>{{ project?.upVotes?.length }}</span>
+
+                  <!-- Down Vote -->
+                  <a (click)="downVoteProject(project.projectId)" style="cursor: pointer;">
+                    <fa-icon [icon]="faArrowDown" style="color:red"
+                      *ngIf="project.downVotes.includes(loggedInUserID)"></fa-icon>
+                    <fa-icon [icon]="faArrowDown" style="color:rgb(231, 229, 229)"
+                      *ngIf="!project.downVotes.includes(loggedInUserID)"></fa-icon>
+                  </a>
+                  <span>{{ project?.downVotes.length }}</span>
                   <span class="badge bg-secondary pe-auto">
                     <fa-icon [icon]="faMessage"></fa-icon>
-                    {{ project?.opinions?.length }}
+                    {{ project?.totalComments }}
                   </span>
                 </div>
               </div>
@@ -109,7 +131,7 @@
         </div>
       </div>
     </div>
-    <div class="col-4 filter pt-5">
+    <!-- <div class="col-4 filter pt-5">
       <div class="card">
         <div class="card-body">
           <h4 class="text-center">All Filter</h4>
@@ -127,7 +149,7 @@
                 />
               </div>
 
-              <!-- <div class="form-group">
+              <div class="form-group">
                 <label class="mt-2" for="form">Project End</label>
                 <input
                   class="form-control"
@@ -137,7 +159,7 @@
                   [(ngModel)]="filterProjectPayload.toDate"
                   [ngModelOptions]="{ standalone: true }"
                 />
-              </div> -->
+              </div>
 
               <div class="form-group mt-2">
                 <label for="department">Project Department</label>
@@ -170,6 +192,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>

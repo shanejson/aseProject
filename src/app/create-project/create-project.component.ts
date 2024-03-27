@@ -5,6 +5,7 @@ import { ProjectService } from '../service/project.service';
 import { RxReactiveFormsModule, RxwebValidators } from '@rxweb/reactive-form-validators';
 import { cities } from '../constants/constants';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-project',
@@ -21,36 +22,14 @@ import { Router } from '@angular/router';
 export class CreateProjectComponent implements OnInit {
 
   cities:any = cities
-
   newProjectForm!: FormGroup
   projectList:any
-
-  newProjectObj: any = {
-    projectName:"",
-    projectDepartmentId: "",
-    projectDepartmentName: "",
-    projectAddress:"",
-    projectCity: "",
-    projectState: "",
-    projectDuration: "",
-    projectBudget: "",
-    projectIsActive: true,
-    projectCreatedDate: new Date().toISOString(),
-    projectCreatedBy: ""
-  }
-
   departmentList: any[] = [{name:'Transportation'}, {name:'Education'}, {name:'Crime'}, {name:'Environment'} ]
+  incompleteForm:boolean = false;
 
-  constructor(private _projectService: ProjectService, private router: Router){
-    
-  }
+  constructor(private _projectService: ProjectService, private router: Router, private http: HttpClient){}
 
   ngOnInit(): void {
-    //this.getProjectDepartments();
-
-    let projectListX:any = localStorage.getItem('projects')
-    this.projectList = JSON.parse(projectListX)
-
     this.newProjectForm = new FormGroup({
       name: new FormControl('', [RxwebValidators.required()]),
       department: new FormControl(null, [RxwebValidators.required()]),
@@ -60,33 +39,54 @@ export class CreateProjectComponent implements OnInit {
       projectStartDate: new FormControl('', [RxwebValidators.required()]),
       description: new FormControl('', [RxwebValidators.required()]),
       createdDate: new FormControl(new Date().toISOString()),
-      projectId: new FormControl(Date.now()),
       opinions: new FormControl([]),
-      id: new FormControl(Date.now().toString())
+      upVotes: new FormControl([]),
+      downVotes: new FormControl([]),
     })
   }
 
 
   onCreateProject(){
-    let payLoad: any = this.newProjectForm.getRawValue()
-
-    //this.projectList = JSON.parse(projectListX)
-    this.projectList.unshift(payLoad)
-    localStorage.setItem('projects', JSON.stringify(this.projectList));
-    alert("Project added succesfully.")
-    this.router.navigate(['/projects'])
-    /* this._projectService.createNewProject(payLoad).subscribe((res:any)=>{
-      if(res.status == 'ok'){
-        alert("Project created succesfully.")
-        this.router.navigate(['/projects'])
-      }else{
-        alert("Project could not be created.")
-      }
-    }) */
+    if(this.newProjectForm.status == "INVALID"){
+      this.incompleteForm = true
+      //return ;
+    }else{
+      this.incompleteForm = false
+      let payLoad: any = this.newProjectForm.getRawValue();
+      this._projectService.createNewProject(payLoad).subscribe((res:any)=>{
+        if(res.status == 1){
+          alert("Project Created Succesfully.")
+          this.newProjectForm.reset({});
+          this.router.navigate(['/projects'])
+        }else{
+          alert("Project Not Created Succesfully.")
+        }
+      })
+    }
+    
+    
   }
 
   reset(){
     this.newProjectForm.reset({})
   }
+
+
+  uploadImage(event:any){
+    
+    console.log(event);
+    const file = event.target.files[0];
+    console.log(file)
+
+    if(file.type == "image/png"){
+      const formObj = new FormData();
+      formObj.append('file', file);
+    }else{
+      alert("Incorrect image type")
+    }
+    
+
+  }
+
 
 }

@@ -60,6 +60,12 @@
           <small class="text-danger" *ngIf="newProjectForm.get('projectStartDate')?.invalid && newProjectForm.get('projectStartDate')?.touched">Start Date is required</small>
         </div>
 
+        <!-- Image -->
+      <!-- <div class="form-group mt-2 ">
+        <label for="featuredImage">Featured Image</label>
+        <input type="file" class="form-control" (change)="uploadImage($event)" >
+      </div> -->
+
         <!-- Description -->
         <div class="form-group mt-2 ">
           <label for="description">Project Description</label>
@@ -70,7 +76,12 @@
         <!-- Action Buttons -->
         <button type="submit" class="btn btn-primary mt-2" style="margin-right: 10px;" (click)="onCreateProject()">Submit</button>
         <button type="submit" class="btn btn-danger mt-2" (click)="reset()">Reset</button>
+
+        <div class="alert alert-danger mt-2" *ngIf="incompleteForm">
+          Please fill out form correctly
+        </div>
       </form>
+      
     </div>
   </div>
 </div>

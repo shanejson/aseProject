@@ -1,30 +1,38 @@
-<div class="container mt-2">
-    <h1>Citizen Sign Up Form</h1>
-    <form [formGroup]="citizenRegForm">
-       <!-- First Name -->
+<div class="card container pt-6">
+  <div class="row">
+    <!-- <div class="col-3 bg-white">
+      Image
+    </div> -->
+    <div class="col-12 content">
+      <div class="card-header card-header-danger">
+        <h4 class="card-title">Sign Up</h4>
+      </div>
+
+      <form [formGroup]="citizenRegForm">
+     
+        
+
         <div class="form-group mt-2 ">
           <label for="firstName">First Name</label>
           <input type="text" formControlName="firstName" class="form-control" id="firstName" placeholder="Enter First Name">
           <small class="text-danger" *ngIf="citizenRegForm.get('firstName')?.invalid && citizenRegForm.get('firstName')?.touched">First Name is required</small>
         </div>
 
-        <!-- Last Name -->
+        
         <div class="form-group mt-2 mt-2">
           <label for="lastName">Last Name</label>
           <input formControlName="lastName" type="text" class="form-control" id="lastName" placeholder="Enter Last Name">
           <small class="text-danger" *ngIf="citizenRegForm.get('lastName')?.invalid && citizenRegForm.get('lastName')?.touched">Last Name is required</small>
         </div>
 
-        <!-- DOB -->
         <div class="form-group mt-2">
           <label for="dob">Date Of Birth</label>
           <input type="date" formControlName="dob" class="form-control" id="dob" placeholder="Enter Date of Birth">
           <small class="text-danger" *ngIf="citizenRegForm.get('dob')?.invalid && citizenRegForm.get('dob')?.touched">Date of Birth is required</small>
         </div>
 
-        <!-- City -->
         <div class="form-group mt-2 ">
-          <label for="city">Project City</label>
+          <label for="city">City</label>
           <select class="form-select" id="city" formControlName="city">
             <option selected disabled value="null">Select City</option>
             <option *ngFor="let item of cities" [value]="item.name">{{item.name}}</option>
@@ -32,36 +40,43 @@
           <small class="text-danger" *ngIf="citizenRegForm.get('city')?.invalid && citizenRegForm.get('city')?.touched">City is required</small>
         </div>
         
-        <!-- Passport Number -->
+   
         <div class="form-group mt-2">
-          <label for="passportNumber">Passport Number</label>
+          <label for="passportNumber">Identitiy Number or Passport Number</label>
           <input  type="text" class="form-control" formControlName="passportNumber" id="passportNumber" placeholder="Enter Passport Number">
-          <small class="text-danger" *ngIf="citizenRegForm.get('passportNumber')?.invalid && citizenRegForm.get('passportNumber')?.touched">Passport Number is required</small>
+          <small class="text-danger" *ngIf="citizenRegForm.get('passportNumber')?.invalid && citizenRegForm.get('passportNumber')?.touched">Identity Number is required</small>
         </div>
 
-        <!-- Contact Number -->
+
         <div class="form-group mt-2">
           <label for="contactNumber">Contact Number</label>
           <input  type="text" class="form-control" formControlName="contactNumber" id="contactNumber" placeholder="Enter Contact Number">
           <small class="text-danger" *ngIf="citizenRegForm.get('contactNumber')?.invalid && citizenRegForm.get('contactNumber')?.touched">Valid Contact Number is required</small>
         </div>
 
-        <!-- Email Address -->
+
         <div class="form-group mt-2">
           <label for="email">Email Address</label>
           <input type="email" class="form-control" formControlName="email" id="email" placeholder="Enter Email Address">
           <small class="text-danger" *ngIf="citizenRegForm.get('email')?.invalid && citizenRegForm.get('email')?.touched">Enter a Valid Email</small>
         </div>
 
-        <!-- Password -->
+
         <div class="form-group mt-2">
           <label for="password">Password</label>
           <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password">
           <small class="text-danger" *ngIf="citizenRegForm.get('password')?.invalid && citizenRegForm.get('password')?.touched">Password must be min 5 characters and max 10 characters</small>
         </div>
 
-        <!-- Action Buttons -->
+   
         <button type="submit" class="btn btn-primary mt-2" style="margin-right: 10px;" (click)="registerCitizen()">Submit</button>
         <button type="submit" class="btn btn-danger mt-2" (click)="cancelRegistration()">Cancel</button>
+
+        <div class="alert alert-danger mt-2" *ngIf="incompleteForm">
+          Please fill out registration form correctly
+        </div>
       </form>
+      
+    </div>
+  </div>
 </div>

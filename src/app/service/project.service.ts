@@ -7,22 +7,28 @@ import { Observable } from 'rxjs';
 })
 export class ProjectService {
 
+  urlToUse: any = "https://aseprojectbackend-1.onrender.com";
+
   private headers =  new HttpHeaders({
     'ngrok-skip-browser-warning': '69420',
   }) 
 
   constructor(private http: HttpClient) { }
 
+  getTest(){
+    return this.http.get(this.urlToUse);
+  }
+
   registerGovtEmp(obj:any){
     return this.http.get("API_END_POINT", obj)
   }
   
   registerCitizen(obj:any){
-    return this.http.get("API_END_POINT", obj)
+    return this.http.post(`${this.urlToUse}/citizen/`, obj)
   }
 
   login(obj:any){
-    return this.http.post("API_END_POINT", obj)
+    return this.http.post(`${this.urlToUse}/log/login/`, obj)
   }
 
   logout(obj:any){
@@ -34,17 +40,16 @@ export class ProjectService {
   }
 
   createNewProject(obj:any){
-    return this.http.post("API_END_POINT", obj);
+    return this.http.post(`${this.urlToUse}/project/`, obj); 
   }
 
   getProjects(){
-    //headers =  new HttpHeaders({'Content-Type': 'application/json'}) 
-    //return this.http.get("https://ecf5-137-207-232-214.ngrok-free.app/project/active", {headers: this.headers});
-    return this.http.get(`https://24a6-137-207-232-214.ngrok-free.app/project/active`)
+    return this.http.get(`${this.urlToUse}/project/active`)
   }
+  
 
   getProjectDetailById(projectId:number){
-    return this.http.get("API_END_POINT?projectId="+ projectId);
+    return this.http.get(`${this.urlToUse}/project/${projectId}`);
   }
 
   getFilteredProjects(obj:any){
@@ -53,6 +58,22 @@ export class ProjectService {
 
   submitOpinion(obj:any){
     //return this.http.post("API_END_POINT", obj)
+  }
+
+  upVoteProject(obj:any){
+    return this.http.patch(`${this.urlToUse}/project/upvote`, obj);
+  }
+
+  downVoteProject(obj:any){
+    return this.http.patch(`${this.urlToUse}/project/downvote`, obj);
+  }
+
+  addComment(obj:any){
+    return this.http.post(`${this.urlToUse}/comment`, obj);
+  }
+
+  getCommentForID(projectId:any){
+    return this.http.get(`${this.urlToUse}/comment/project/${projectId}`);
   }
 
 

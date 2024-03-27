@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { CitizenRegisterComponent } from './citizen-register/citizen-register.component';
@@ -14,7 +14,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { OpinionModalComponent } from './opinion-modal/opinion-modal.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CitizenActivityComponent } from './citizen-activity/citizen-activity.component';
 import { GovtDashboardComponent } from './govt-dashboard/govt-dashboard.component';
 import {
@@ -32,11 +32,22 @@ import { QuizQuestionsComponent } from './quiz-questions/quiz-questions.componen
 import { QuizResultComponent } from './quiz-result/quiz-result.component';
 import { EventsComponent } from './events/events.component';
 import { CreatePostModalComponent } from './create-post-modal/create-post-modal.component';
+import { ProjectService } from './service/project.service';
+import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CreateEventComponent } from './create-event/create-event.component';
+import { EventBookingsComponent } from './event-bookings/event-bookings.component';
+import { EventListComponent } from './event-list/event-list.component';
+import { MyBookingComponent } from './my-booking/my-booking.component';
+import { EventBookingModalComponent } from './event-booking-modal/event-booking-modal.component';
+import { EventDetailsComponent } from './event-details/event-details.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
+    CommonModule,
+    FormsModule,
     RouterOutlet,
     RouterLink,
     LoginComponent,
@@ -61,14 +72,48 @@ import { CreatePostModalComponent } from './create-post-modal/create-post-modal.
     QuizQuestionsComponent,
     QuizResultComponent,
     EventsComponent,
-    CreatePostModalComponent
+    CreatePostModalComponent,
+    HttpClientModule,
+    TranslateModule,
+    CreateEventComponent,
+    EventBookingsComponent,
+    EventListComponent,
+    MyBookingComponent,
+    EventBookingModalComponent,
+    EventDetailsComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
+  //Event
+  isLoginView: boolean= true;
+  registerObj: any = {
+    "UserId": 0,
+    "Name": "",
+    "Email": "",
+    "Password": "",
+    "ContactNo": "",
+    "Role": ""
+  };
+  loginObj : any = {
+    "Password": "",
+    "ContactNo": ""
+  }
+  isUserLoggedin: boolean = false;
+  loggedUserData:any;
+  //Event
+
   isLoggedIn: boolean = false;
   userInfo: any;
+
+  //Check if User is logged in
+  loggedIn: boolean = false
+
+
+
+  title:any = "Greetings"
 
   projectList: any = [
     {
@@ -88,7 +133,9 @@ export class AppComponent {
         { opinion: 'Average', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
         { opinion: 'Excellent', date: '2024-02-29T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
         { opinion: 'Excellent', date: '2024-02-30T04:13:52.014Z', message: "" },
-      ]
+      ],
+      upVotes: 0,
+      downVotes: 0
     },
     {
       id:'12fd43dsd3',
@@ -108,7 +155,9 @@ export class AppComponent {
         { opinion: 'Good', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
         { opinion: 'Excellent', date: '2024-02-28T04:13:52.014Z', message: "" },
         { opinion: 'Awful', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-      ]
+      ],
+      upVotes: 0,
+      downVotes: 0
     },
     {
       id:'134dfg5',
@@ -125,7 +174,9 @@ export class AppComponent {
       opinions: [
         { opinion: 'Good', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
         { opinion: 'Average', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." }
-      ]
+      ],
+      upVotes: 0,
+      downVotes: 0
     },
     {
       id:'dfs45d3',
@@ -147,7 +198,9 @@ export class AppComponent {
         { opinion: 'Awful', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
         { opinion: 'Average', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
         { opinion: 'Average', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-      ]
+      ],
+      upVotes: 0,
+      downVotes: 0
     },
     {
       id:'f312434fdd3',
@@ -171,7 +224,9 @@ export class AppComponent {
         { opinion: 'Awful', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
         { opinion: 'Average', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
         { opinion: 'Average', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-      ]
+      ],
+      upVotes: 0,
+      downVotes: 0
     }
   ]
 
@@ -416,32 +471,65 @@ export class AppComponent {
     {email: 'citizen@team14.com', password: '12345678', role: 'citizen' },
   ]
 
-  constructor() {
-    /* const projectDetails = localStorage.getItem('loggedIn');
-    if(projectDetails == null){
-      localStorage.setItem('projects', JSON.stringify(this.projectList));
-    }
-     */
+  constructor(private _ProjectService: ProjectService, private _translateService: TranslateService, public dialog: MatDialog) {
+    
+    //To Remove
     localStorage.setItem('projects', JSON.stringify(this.projectList));
-    localStorage.setItem('users', JSON.stringify(this.demoUsers));
     let postListX:any = localStorage.getItem('postsList');
     if(postListX == null){
       localStorage.setItem('postsList', JSON.stringify(this.postsList));
     }
-    
     localStorage.setItem('quizQuestionList', JSON.stringify(this.quizQuestionList));
 
-    /* const loginDetails = localStorage.getItem('loggedIn');
-    if (loginDetails == null) {
-      this.isLoggedIn = false;
-    } else {
-      this.userInfo = JSON.parse(loginDetails);
-      this.isLoggedIn = true;
-    } */
   }
 
-  onLogout() {
-    this.isLoggedIn = false;
-    localStorage.removeItem('loggedIn')
+  ngOnInit(): void {
+    //Language
+    this._translateService.setDefaultLang('en');
+    this._translateService.use(localStorage.getItem('language') || 'en');
+    this.language = localStorage.getItem("language") || "en";
+
+
+    //Login Logout Check
+    let loginDetails:any = localStorage.getItem('loggedInUser')
+    if(loginDetails !== null){
+      this.loggedIn = true
+    }else{
+      this.loggedIn = false
+    }
+   
   }
+
+  language:any = ""
+  ChangeLanguage(language:any){
+    const selectedLanguage = language.target.value;
+    console.log("Selected Language: ", selectedLanguage);
+    localStorage.setItem("language", selectedLanguage);
+    this._translateService.use(selectedLanguage);
+
+  }
+
+
+
+ 
+
+
+
+
+  openLoginModal(){
+    var _popup = this.dialog.open(LoginComponent, {
+      width: '60%',
+      data: {
+        title: "Login"
+      }
+    })
+  }
+
+  logout(){
+    let loginDetails:any = localStorage.getItem('loggedInUser')
+    console.log(loginDetails);
+    localStorage.removeItem('loggedInUser');
+    this.loggedIn = false
+  }
+
 }

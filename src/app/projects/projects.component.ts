@@ -4,8 +4,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { IDropdownSettings, NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { faArrowRightArrowLeft, faArrowUpRightFromSquare, faCoffee, faComment, faMessage } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleDown, faArrowAltCircleUp, faArrowRightArrowLeft, faArrowUpRightFromSquare, faCoffee, faComment, faMessage } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-projects',
@@ -22,155 +24,51 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 })
 export class ProjectsComponent implements OnInit {
 
+  loggedInUserID: any
+  loggedInDetails: any = {}
+  allowedToVote: boolean = false
+  loggedIn: boolean = false;
   projectList: any[] = [];
-  dropdownList:any = [];
-  selectedItems:any = [];
-  dropdownSettings:any = {};
+  dropdownList: any = [];
+  selectedItems: any = [];
+  dropdownSettings: any = {};
   faMessage = faMessage
-  faArrowUp = faArrowUpRightFromSquare
+  faArrowUpRight = faArrowUpRightFromSquare
+  faArrowUp = faArrowAltCircleUp
+  faArrowDown = faArrowAltCircleDown
+  fromDate: any = new Date().toISOString()
+  projects: any;
+  searchProject: any = ""
+  departmentList: any[] = [{ name: 'Transportation' }, { name: 'Education' }, { name: 'Crime' }, { name: 'Environment' }]
 
-  fromDate:any = new Date().toISOString()
-
-  projects:any;
-
-
-  departmentList: any[] = [{name:'Transportation'}, {name:'Education'}, {name:'Crime'}, {name:'Environment'} ]
-
-  filterProjectPayload:any = {
-    fromDate:"",
-    toDate: "",
-    department: " ",
-    name: ""
-  }
-  
-  constructor(private _projectService: ProjectService, private router: Router) { 
-    
-  }
+  constructor(private _projectService: ProjectService, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-
     this.loadProjects();
+
+    //Login Logout Check
+    let loggedInX = localStorage.getItem('loggedInUser')
+    if (loggedInX !== null) {
+      this.loggedInDetails = JSON.parse(loggedInX);
+      this.loggedInUserID = Number(this.loggedInDetails.id)
+      this.loggedIn = true
+    } else {
+      this.loggedIn = false
+    }
   }
 
   loadProjects() {
-    this._projectService.getProjects().subscribe((res:any)=>{
-      /* if(res.status == '1'){
-        this.projectList = res.data;
-      } */
-      /* else{
-        this.projectList = [
-          {
-            id:'1243dsd3',
-            name: "TransitTransform",
-            department: 'Transportation',
-            city: "Lyon",
-            duration: "27 months",
-            budget: "500,000",
-            IsActive: true,
-            projectStartDate: '2024-02-27T04:13:52.014Z',
-            createdDate: '2024-02-27T04:13:52.014Z',
-            createdBy: "shane@gmail.com",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            opinions: [
-              { opinion: 'Great', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-              { opinion: 'Average', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-              { opinion: 'Excellent', date: '2024-02-29T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-              { opinion: 'Excellent', date: '2024-02-30T04:13:52.014Z', message: "" },
-            ]
-          },
-          {
-            id:'12fd43dsd3',
-            name: "TechLearnHub",
-            department: 'Education',
-            city: "Paris",
-            duration: "12 months",
-            budget: "100,000",
-            IsActive: true,
-            projectStartDate: '2024-03-20T04:13:52.014Z',
-            createdDate: '2024-02-27T04:13:52.014Z',
-            createdBy: "sheldon@gmail.com",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            opinions: [
-              { opinion: 'Good', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-              { opinion: 'Average', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-              { opinion: 'Good', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-              { opinion: 'Excellent', date: '2024-02-28T04:13:52.014Z', message: "" },
-              { opinion: 'Awful', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-            ]
-          },
-          {
-            id:'134dfg5',
-            name: "SafeStreetsProgram",
-            department: 'Crime',
-            city: "Nantes",
-            duration: "06 months",
-            budget: "400,000",
-            IsActive: true,
-            projectStartDate: '2024-01-27T04:13:52.014Z',
-            createdDate: '2024-02-27T04:13:52.014Z',
-            createdBy: "shane@gmail.com",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            opinions: [
-              { opinion: 'Good', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-              { opinion: 'Average', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." }
-            ]
-          },
-          {
-            id:'dfs45d3',
-            name: "GreenSustainProject",
-            department: 'Environment',
-            city: "Nice",
-            duration: "24 months",
-            budget: "800,000",
-            IsActive: true,
-            projectStartDate: '2024-05-20T04:13:52.014Z',
-            createdDate: '2024-01-27T04:13:52.014Z',
-            createdBy: "sheldon@gmail.com",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            opinions: [
-              { opinion: 'Good', date: '2024-02-29T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-              { opinion: 'Average', date: '2024-02-29T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-              { opinion: 'Good', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-              { opinion: 'Excellent', date: '2024-02-28T04:13:52.014Z', message: "" },
-              { opinion: 'Awful', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-              { opinion: 'Average', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-              { opinion: 'Average', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-            ]
-          },
-          {
-            id:'f312434fdd3',
-            name: "RainDrain",
-            department: 'Environment',
-            city: "Paris",
-            duration: "06 months",
-            budget: "1000,000",
-            IsActive: false,
-            projectStartDate: '2023-01-27T04:13:52.014Z',
-            createdDate: '2023-02-27T04:13:52.014Z',
-            createdBy: "shane@gmail.com",
-            description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            opinions: [
-              { opinion: 'Good', date: '2024-02-29T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-              { opinion: 'Average', date: '2024-02-29T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-              { opinion: 'Good', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-              { opinion: 'Excellent', date: '2024-02-28T04:13:52.014Z', message: "" },
-              { opinion: 'Average', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-              { opinion: 'Average', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-              { opinion: 'Awful', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-              { opinion: 'Average', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-              { opinion: 'Average', date: '2024-02-28T04:13:52.014Z', message: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-            ]
-          }
-        ]
-      } */
+    this._projectService.getProjects().subscribe((res: any) => {
+      if (res.status == 1) {
+        this.projectList = res.projects
+        console.log("Project list: ", this.projectList)
+      } else {
+        this.projectList = [];
+      }
     })
-
-    //INcase API does not work
-    let projectListX:any = localStorage.getItem('projects')
-    this.projectList = JSON.parse(projectListX)
   }
 
-  openProject(id:number){
+  openProject(id: number) {
     this.router.navigate(['/project-detail', id])
   }
 
@@ -182,29 +80,74 @@ export class ProjectsComponent implements OnInit {
   }
 
 
-  searchFilters(){
-
-    console.log(this.filterProjectPayload)
-
-    let filteredProjectList = this.projectList.filter((x:any)=>{
-      return x.projectStartDate >= this.filterProjectPayload.fromDate || x.department == this.filterProjectPayload.department
-    })
-
-    console.log("--->", filteredProjectList);
-    
-    this.projectList = filteredProjectList
-    /* this._projectService.getFilteredProjects(this.filterProjectPayload).subscribe((res:any)=>{
-      if(res.status == 'ok'){
-        alert("Citizen Created Succesfully.")
-        this.router.navigate(['/login'])
-      }else{
-        alert("Citizen Not Created Succesfully.")
-      }
-    }) */
+  reset() {
+    this.loadProjects();
   }
 
-  reset(){
-    this.loadProjects();
+
+  upVoteProject(projectId: any) {
+    let project = this.projectList.find((x: any) => x.projectId == projectId)
+    if (!this.loggedIn) {
+      this.allowedToVote = true
+      var _popup = this.dialog.open(LoginComponent, {
+        width: '60%',
+        data: {
+          title: "Login"
+        }
+      })
+    } else {
+      this.allowedToVote = false
+      if (!project.upVotes.includes(this.loggedInUserID)) {
+        let payLoad: any = {
+          "projectId": projectId,
+          "userId": this.loggedInUserID
+        }
+        this._projectService.upVoteProject(payLoad).subscribe((res: any) => {
+          if (res.status == 1) {
+            let objIndex = this.projectList.findIndex(obj => obj.projectId == res.project.projectId)
+            this.projectList[objIndex] = res.project
+          } else {
+            alert("Up vote unsucessfull");
+          }
+        })
+      } 
+    }
+  }
+
+  downVoteProject(projectId: any) {
+    let project = this.projectList.find((x: any) => x.projectId == projectId)
+    if (!this.loggedIn) {
+      this.allowedToVote = true
+      var _popup = this.dialog.open(LoginComponent, {
+        width: '60%',
+        data: {
+          title: "Login"
+        }
+      })
+    } else {
+      this.allowedToVote = false
+      if (!project.downVotes.includes(this.loggedInUserID)) {
+        let payLoad: any = {
+          "projectId": projectId,
+          "userId": this.loggedInUserID
+        }
+        this._projectService.downVoteProject(payLoad).subscribe((res: any) => {
+          if (res.status == 1) {
+            let objIndex = this.projectList.findIndex(obj => obj.projectId == res.project.projectId)
+            this.projectList[objIndex] = res.project
+          } else {
+            alert("Down vote unsucessfull");
+          }
+        })
+      }
+    }
+  }
+
+
+  getSearchedProjects() {
+    if (this.searchProject != "") {
+      console.log(this.searchProject)
+    }
   }
 
 }
