@@ -1,40 +1,50 @@
-<div class="container-fluid " style="background-color: #f1f5f9"><!-- pt-5 -->
+<div class="container-fluid" style="background-color: #f1f5f9">
   <div class="row">
-    <!-- <div class="alert alert-danger mt-2" *ngIf="allowedToVote">
-      Please login to vote
-    </div> -->
     <div class="col-6">
-
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
-        [(ngModel)]="searchProject">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="getSearchedProjects()">Search</button>
-
+      <div class="input-group">
+        <input
+          class="form-control"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+          [(ngModel)]="searchProject"
+        />
+        <button
+          class="btn btn-success"
+          type="submit"
+          (click)="getSearchedProjects()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-search"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zM2 6.5a4.5 4.5 0 0 1 9 0 4.5 4.5 0 0 1-9 0z"
+            />
+          </svg>
+        </button>
+      </div>
     </div>
   </div>
   <div class="row mt-0">
-    <div class="col-9 project">
+    <div class="col-9 project" style="max-height: 66vh; overflow-y: auto">
       <div class="row pt-5" *ngFor="let project of projectList">
         <div class="col-12">
           <div class="card">
             <div class="card-body">
               <div class="row card-header card-header-danger">
-                <div class="col-1">
-                  <!-- <span
-                    *ngIf="project.IsActive == true"
-                    class="badge bg-success"
-                    >Active</span
-                  >
-                  <span
-                    *ngIf="project.IsActive == false"
-                    class="badge bg-secondary"
-                    >In-Active</span
-                  > -->
-                </div>
+                <div class="col-1"></div>
 
                 <div class="col-10"><b>Project: </b> {{ project?.name }}</div>
                 <div class="col-1 text-end">
-                  <!--  -->
-                  <a [routerLink]="'/project-detail/' + project.projectId" style="color: white">
+                  <a
+                    [routerLink]="'/project-detail/' + project.projectId"
+                    style="color: white"
+                  >
                     <fa-icon [icon]="faArrowUpRight"></fa-icon>
                   </a>
                 </div>
@@ -49,9 +59,105 @@
               <div class="row mt-2">
                 <div class="col-12">
                   <b>Description: </b>
-                  <!-- <i class="fa fa-file-text-o" aria-hidden="true"></i> -->
-                  <span class="text-muted">{{ project?.description | slice : 0 - 300 }}....<a
-                      [routerLink]="'/project-detail/' + project.projectId">Read More</a></span>
+
+                  <span class="text-muted"
+                    >{{ project?.description | slice : 0 - 300 }}....<a
+                      [routerLink]="'/project-detail/' + project.projectId"
+                      >Read More</a
+                    ></span
+                  >
+                  <hr />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <b>Project Start: </b> {{ project?.projectStartDate | date
+                  }}<br />
+                  <b>Duration: </b> {{ project?.duration }}
+                </div>
+                <div class="col-6 text-end">
+                  <a
+                    (click)="upVoteProject(project.projectId)"
+                    style="cursor: pointer"
+                  >
+                    <fa-icon
+                      [icon]="faArrowUp"
+                      style="color: green"
+                      *ngIf="project.upVotes.includes(loggedInUserID)"
+                    >
+                    </fa-icon>
+                    <fa-icon
+                      [icon]="faArrowUp"
+                      style="color: rgb(231, 229, 229)"
+                      *ngIf="!project.upVotes.includes(loggedInUserID)"
+                    ></fa-icon>
+                  </a>
+                  <span>{{ project?.upVotes?.length }}</span>
+
+                  <a
+                    (click)="downVoteProject(project.projectId)"
+                    style="cursor: pointer"
+                  >
+                    <fa-icon
+                      [icon]="faArrowDown"
+                      style="color: red"
+                      *ngIf="project.downVotes.includes(loggedInUserID)"
+                    >
+                    </fa-icon>
+                    <fa-icon
+                      [icon]="faArrowDown"
+                      style="color: rgb(231, 229, 229)"
+                      *ngIf="!project.downVotes.includes(loggedInUserID)"
+                    ></fa-icon>
+                  </a>
+                  <span>{{ project?.downVotes.length }}</span>
+                  <span class="badge bg-secondary pe-auto">
+                    <fa-icon [icon]="faMessage"></fa-icon>
+                    {{ project?.totalComments }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="col-9 project">
+      <div class="row pt-5" *ngFor="let project of projectList">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="row card-header card-header-danger">
+                <div class="col-1"></div>
+
+                <div class="col-10"><b>Project: </b> {{ project?.name }}</div>
+                <div class="col-1 text-end">
+                  <a
+                    [routerLink]="'/project-detail/' + project.projectId"
+                    style="color: white"
+                  >
+                    <fa-icon [icon]="faArrowUpRight"></fa-icon>
+                  </a>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-4">
+                  <b>Department</b>: {{ project?.department }}
+                </div>
+                <div class="col-4"><b>City</b>: {{ project?.city }}</div>
+                <div class="col-4"><b>Budget</b>: € {{ project?.budget }}</div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-12">
+                  <b>Description: </b>
+
+                  <span class="text-muted"
+                    >{{ project?.description | slice : 0 - 300 }}....<a
+                      [routerLink]="'/project-detail/' + project.projectId"
+                      >Read More</a
+                    ></span
+                  >
                   <hr />
                 </div>
               </div>
@@ -62,21 +168,37 @@
                   <b>Duration: </b> {{ project?.duration }}
                 </div>
                 <div class="col-6 text-end">
-                  <!-- Up Vote -->
-                  <a (click)="upVoteProject(project.projectId)" style="cursor: pointer;">
-                    <fa-icon [icon]="faArrowUp" style="color:green"
-                      *ngIf="project.upVotes.includes(loggedInUserID)"></fa-icon>
-                    <fa-icon [icon]="faArrowUp" style="color:rgb(231, 229, 229)"
-                      *ngIf="!project.upVotes.includes(loggedInUserID)"></fa-icon>
+                  <a
+                    (click)="upVoteProject(project.projectId)"
+                    style="cursor: pointer"
+                  >
+                    <fa-icon
+                      [icon]="faArrowUp"
+                      style="color: green"
+                      *ngIf="project.upVotes.includes(loggedInUserID)"
+                    ></fa-icon>
+                    <fa-icon
+                      [icon]="faArrowUp"
+                      style="color: rgb(231, 229, 229)"
+                      *ngIf="!project.upVotes.includes(loggedInUserID)"
+                    ></fa-icon>
                   </a>
                   <span>{{ project?.upVotes?.length }}</span>
 
-                  <!-- Down Vote -->
-                  <a (click)="downVoteProject(project.projectId)" style="cursor: pointer;">
-                    <fa-icon [icon]="faArrowDown" style="color:red"
-                      *ngIf="project.downVotes.includes(loggedInUserID)"></fa-icon>
-                    <fa-icon [icon]="faArrowDown" style="color:rgb(231, 229, 229)"
-                      *ngIf="!project.downVotes.includes(loggedInUserID)"></fa-icon>
+                  <a
+                    (click)="downVoteProject(project.projectId)"
+                    style="cursor: pointer"
+                  >
+                    <fa-icon
+                      [icon]="faArrowDown"
+                      style="color: red"
+                      *ngIf="project.downVotes.includes(loggedInUserID)"
+                    ></fa-icon>
+                    <fa-icon
+                      [icon]="faArrowDown"
+                      style="color: rgb(231, 229, 229)"
+                      *ngIf="!project.downVotes.includes(loggedInUserID)"
+                    ></fa-icon>
                   </a>
                   <span>{{ project?.downVotes.length }}</span>
                   <span class="badge bg-secondary pe-auto">
@@ -85,110 +207,7 @@
                   </span>
                 </div>
               </div>
-
-              <!-- <div class="row">
-                                <div class="col-8">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h6 style="margin-bottom: 0;">{{project.projectName}}
-                                            </h6>
-                                            Created At: {{project.projectCreatedDate}}
-                                            <br>Created By: {{project.projectCreatedBy}}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-4 text-end">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-4">
-                                    <i class="fa fa-suitcase" aria-hidden="true"></i> {{project.projectCity}}
-                                </div>
-                                <div class="col-4">
-                                    <i class="fa fa-inr" aria-hidden="true"></i> ${{project.projectBudget}}
-                                </div>
-                                <div class="col-4">
-                                    <i class="fa fa-map-marker" aria-hidden="true"></i> {{project.projectDuration}}
-                                </div>
-                            </div>
-                            <div class="row pt-1">
-                                <div class="col-12">
-                                    <i class="fa fa-file-text-o" aria-hidden="true"></i> <span
-                                        class="text-muted">{{project.projectDescription | slice:0-100}}....
-                                        ReadMore</span>
-                                </div>
-                            </div>
-                            <div class="row pt-1">
-                                <div class="col-6">
-                                    <button>Give Opinion</button>
-                                </div>
-                                <div class="col-6 text-end">
-                                    <i class="fa fa-bookmark" aria-hidden="true"></i>
-                                </div>
-                            </div> -->
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- <div class="col-4 filter pt-5">
-      <div class="card">
-        <div class="card-body">
-          <h4 class="text-center">All Filter</h4>
-          <div class="container">
-            <form>
-              <div class="form-group">
-                <label class="mt-2" for="form">Project Start</label>
-                <input
-                  class="form-control"
-                  type="date"
-                  id="from"
-                  name="from"
-                  [(ngModel)]="filterProjectPayload.fromDate"
-                  [ngModelOptions]="{ standalone: true }"
-                />
-              </div>
-
-              <div class="form-group">
-                <label class="mt-2" for="form">Project End</label>
-                <input
-                  class="form-control"
-                  type="date"
-                  id="from"
-                  name="from"
-                  [(ngModel)]="filterProjectPayload.toDate"
-                  [ngModelOptions]="{ standalone: true }"
-                />
-              </div>
-
-              <div class="form-group mt-2">
-                <label for="department">Project Department</label>
-                <select
-                  class="form-select"
-                  id="department"
-                  [(ngModel)]="filterProjectPayload.department"
-                  [ngModelOptions]="{ standalone: true }"
-                >
-                  <option selected disabled value=" ">Select Department</option>
-                  <option
-                    *ngFor="let item of departmentList"
-                    [value]="item.name"
-                  >
-                    {{ item.name }}
-                  </option>
-                </select>
-              </div>
-              <div class="btns">
-                <button
-                  type="button"
-                  class="btn btn-primary mt-2 mx-2"
-                  (click)="searchFilters()"
-                >
-                  Search
-                </button>
-                <button type="button" class="btn btn-danger mt-2" (click)="reset()">Reset</button>
-              </div>
-            </form>
           </div>
         </div>
       </div>
