@@ -95,7 +95,7 @@ export class HomeComponent implements OnInit{
     var _popup = this.dialog.open(CreatePostModalComponent, {
       width: '60%',
       data: {
-        title: "Add a Post",
+        title: "Feedback Details",
       }
     })
     _popup.afterClosed().subscribe((item:any)=>{

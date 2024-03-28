@@ -9,6 +9,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { faArrowAltCircleUp, faArrowAltCircleDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from '../login/login.component';
+import { WarningModalComponent } from '../warning-modal/warning-modal.component';
 
 @Component({
   selector: 'app-project-details',
@@ -151,25 +152,40 @@ export class ProjectDetailsComponent implements OnInit {
         "timestamp": new Date().toISOString(),
         "user_id": this.loggedInUserID
       }
-      if(payLoad.content == ""){
+      if (payLoad.content == "") {
         this.incompleteComment = true
-      }else{
-        this.incompleteComment = false
-        this.spinner = true
-        this._projectService.addComment(payLoad).subscribe((res: any) => {
-          console.log("Response: ", res)
-          if (res.status == 1) {
-            this.spinner = false
-            this.projectComments.unshift(res.id)
-            console.log("Project Comments: ", this.projectComments)
-            this.opinionForm.reset({});
-          } else {
-            this.spinner = false
-            alert("Upvote unsucessfull");
+      } else {
+        var warningPopup = this.dialog.open(WarningModalComponent, {
+          width: '60%',
+          data: {
+            title: "Login",
+            content: "Comments once submitted cannot be edited or deleted. Do you want to proceed ?"
           }
         })
+        warningPopup.afterClosed().subscribe((item: any) => {
+          console.log("Warning Pop up Details: ", item)
+          if (item == "Confirm") {
+            this.incompleteComment = false
+            this.spinner = true
+            this._projectService.addComment(payLoad).subscribe((res: any) => {
+              console.log("Response: ", res)
+              if (res.status == 1) {
+                this.spinner = false
+                this.projectComments.unshift(res.id)
+                console.log("Project Comments: ", this.projectComments)
+                this.opinionForm.reset({});
+              } else {
+                this.spinner = false
+                alert("Upvote unsucessfull");
+              }
+            })
+          }
+        })
+
+
+
       }
-      
+
     }
 
   }

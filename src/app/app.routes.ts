@@ -30,9 +30,9 @@ export const routes: Routes = [
     {path: 'my-activity', component: CitizenActivityComponent},
     {path: 'govt-dashboard', component: GovtDashboardComponent},
     {path: 'quiz', component: QuizComponent},
-    {path:'events-list', component: EventsComponent},
+    {path:'events', component: EventsComponent},
     {path:'create-event', component: CreateEventComponent},
-    {path:'events', component: EventListComponent},
+    {path:'events-list', component: EventListComponent},
     {path:'event-detail/:eventId', component: EventDetailsComponent},
     {path: '**', component:HomeComponent}
 ];
