@@ -15,6 +15,7 @@ import { EventsComponent } from './events/events.component';
 import { CreateEventComponent } from './create-event/create-event.component';
 import { EventListComponent } from './event-list/event-list.component';
 import { EventDetailsComponent } from './event-details/event-details.component';
+import { VoteComponent } from './vote/vote.component';
 
 export const routes: Routes = [
     {path:'', redirectTo:'home', pathMatch:'full'},
@@ -34,5 +35,6 @@ export const routes: Routes = [
     {path:'create-event', component: CreateEventComponent},
     {path:'events-list', component: EventListComponent},
     {path:'event-detail/:eventId', component: EventDetailsComponent},
+    {path:'vote', component: VoteComponent},
     {path: '**', component:HomeComponent}
 ];

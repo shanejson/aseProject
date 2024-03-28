@@ -96,6 +96,18 @@ export class ProjectService {
     return this.http.patch(`${this.urlToUse}/event/unregister`, obj);
   }
 
+  getAllPartyVotes(){
+    return this.http.get(`${this.urlToUse}/party/`);
+  }
+
+  voteParty(obj:any){
+    return this.http.patch(`${this.urlToUse}/party/vote`, obj);
+  }
+
+  unVoteParty(obj:any){
+    return this.http.patch(`${this.urlToUse}/party/unvote`, obj);
+  }
+
   
 
 

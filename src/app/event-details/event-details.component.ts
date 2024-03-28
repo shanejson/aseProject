@@ -62,7 +62,7 @@ export class EventDetailsComponent {
 
 
       this._projectService.getFutureEvents().subscribe((res:any)=>{
-        this.otherEvents = res.filter((x:any)=> x.id !==  this.eventDetails.id)
+        this.otherEvents = res.filter((x:any)=> x.id !==  this.eventDetails)
         console.log("Other Events: ", this.otherEvents)
       })
 
