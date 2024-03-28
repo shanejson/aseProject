@@ -1,48 +1,87 @@
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+<!-- Header -->
+<header>
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light">
     <div class="container">
+      <!-- Navigation bar content -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon">
+        </span>
+      </button>
+      
+      <!-- Nav Links -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLink="home">{{"Home" | translate}}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLink="quiz">{{"Quiz" | translate}} </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" routerLink="projects">{{"Projects" | translate}}</a>
+          </li>
+          <li class="nav-item">
+            <a class="" routerLink="/new-project">{{"Create New Project" | translate}}</a>
+          </li>
+          <li class="nav-item">
+            <a class="" routerLink="/govt-dashboard">{{"Dashboard" | translate}}</a>
+          </li>
+          <li class="nav-item">
+            <a class="" routerLink="/events">{{"Events" | translate}}</a>
+          </li>
+          <li class="nav-item">
+            <a class="" routerLink="/create-event">{{"Create Event" | translate}}</a>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <div class="form-group mt-2">
+            <select class="form-select" (change)="ChangeLanguage($event)">
+              <option [selected]="language==='en'"  value="en">{{"English" | translate}}</option>
+              <option [selected]="language==='fr'"  value="fr">{{"French" | translate}}</option>
+              
+            </select>
+          </div>
 
-        <a class="navbar-brand" href="index.html">
-            <!-- <img src="../assets/Sample_logo.png" alt="" class="d-inline-block align-text-top"> -->
-            TEAM14
-
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" routerLink="projects">Projects</a>
-                </li>
-                <li class="nav-item"><!-- *ngIf="userInfo?.role == 'govtEmployee'" -->
-                    <a class="nav-link" routerLink="/project-listing">My Projects</a>
-                </li>
-                <li class="nav-item"><!-- *ngIf="userInfo?.role == 'govtEmployee'" -->
-                    <a class="nav-link" routerLink="/new-project">Create New Project</a>
-                </li>
-                <li class="nav-item"><!-- *ngIf="userInfo?.role == 'govtEmployee'" -->
-                    <a class="nav-link" routerLink="/my-activity">My Activity</a>
-                </li>
-                <li class="nav-item"><!-- *ngIf="userInfo?.role == 'govtEmployee'" -->
-                    <a class="nav-link" routerLink="/govt-dashboard">Dashboard</a>
-                </li>
-
-            </ul>
-            <form class="d-flex">
-                <button *ngIf="!isLoggedIn" class="btn btn-outline-primary round-button mx-2" type="button"
-                    routerLink="login">Login</button>
-                <button *ngIf="!isLoggedIn" class="btn btn-success round-button mx-2" type="button"
-                    routerLink="citizen-register">Register User</button>
-                <button *ngIf="!isLoggedIn" class="btn btn-success round-button mx-2" type="button"
-                    routerLink="govtEmp-register">Govt Employee User</button>
-                <button *ngIf="isLoggedIn" class="btn btn-link" type="button">{{userInfo.email}} </button>
-                <button *ngIf="isLoggedIn" class="btn btn-outline-primary round-button mx-2" type="button"
-                    (click)="onLogout()">Logout</button>
-            </form>
-        </div>
+          <button class="btn btn-success" type="button" (click)="openLoginModal()" *ngIf="!loggedIn">{{"Login" | translate}}</button>
+          <button class="btn btn-success" type="button" (click)="logout()" *ngIf="loggedIn">{{"Logout" | translate}}</button>
+        </form>
+      </div>
     </div>
-</nav>
-<div class="container-fluid body-background">
+  </nav>
+</header>
+
+<!-- Main content -->
+<main class="mt-5">
+  <div class="container-fluid body-background pt-5">
     <router-outlet></router-outlet>
-</div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h5>{{"Useful Links" | translate}}</h5>
+        <ul>
+          <li><a href="#">{{"Home" | translate}}</a></li>
+          <li><a href="#">{{"News" | translate}}</a></li>
+          <li><a href="#">{{"About" | translate}}</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h5>{{"Contact" | translate}}</h5>
+        <p>{{"Address: 123 Republic Street, Paris" | translate}}</p>
+        <p>{{Phone" | translate}}: +33 1 23 45 67 89</p>
+        <p>{{"Email" | translate}}: info&#64;government.fr</p>
+      </div>
+      <div class="col-md-4">
+        <h5>{{"Legal Notice" | translate}}</h5>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+

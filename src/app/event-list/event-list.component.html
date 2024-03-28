@@ -1,0 +1,16 @@
+<div class="container-fluid">
+  <h2>All Events</h2>
+  <div class="row">
+    <div class="col-3" *ngFor="let event of eventList">
+      <div class="card">
+        <img class="card-img-top" style="height:200px" [src]="event.imageUrl" alt="Card image">
+        <div class="card-body">
+          <h4 class="card-title">{{event.eventName}}</h4>
+          <p class="card-text">{{event.startDate | date}} {{event.startTime}} - ${{event.price}}</p>
+          <p class="card-text">{{event.location}}</p>
+          <a [routerLink]="'/event-detail/' + event.eventID" class="btn btn-primary">View</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

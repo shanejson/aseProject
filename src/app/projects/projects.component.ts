@@ -4,8 +4,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { IDropdownSettings, NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { faArrowRightArrowLeft, faArrowUpRightFromSquare, faCoffee, faComment, faMessage } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleDown, faArrowAltCircleUp, faArrowRightArrowLeft, faArrowUpRightFromSquare, faCoffee, faComment, faMessage } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-projects',
@@ -22,60 +24,51 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 })
 export class ProjectsComponent implements OnInit {
 
+  loggedInUserID: any
+  loggedInDetails: any = {}
+  allowedToVote: boolean = false
+  loggedIn: boolean = false;
   projectList: any[] = [];
-  dropdownList:any = [];
-  selectedItems:any = [];
-  dropdownSettings:any = {};
+  dropdownList: any = [];
+  selectedItems: any = [];
+  dropdownSettings: any = {};
   faMessage = faMessage
-  faArrowUp = faArrowUpRightFromSquare
+  faArrowUpRight = faArrowUpRightFromSquare
+  faArrowUp = faArrowAltCircleUp
+  faArrowDown = faArrowAltCircleDown
+  fromDate: any = new Date().toISOString()
+  projects: any;
+  searchProject: any = ""
+  departmentList: any[] = [{ name: 'Transportation' }, { name: 'Education' }, { name: 'Crime' }, { name: 'Environment' }]
 
-  fromDate:any = new Date().toISOString()
-
-  projects:any;
-  
-  constructor(private _projectService: ProjectService, private router: Router) { 
-    
-  }
+  constructor(private _projectService: ProjectService, private router: Router, public dialog: MatDialog) { }
 
   ngOnInit(): void {
-
     this.loadProjects();
 
-    this.dropdownList = [
-      { item_id: 1, item_text: 'Mumbai' },
-      { item_id: 2, item_text: 'Bangaluru' },
-      { item_id: 3, item_text: 'Pune' },
-      { item_id: 4, item_text: 'Navsari' },
-      { item_id: 5, item_text: 'New Delhi' }
-    ];
-    this.selectedItems = [
-      { item_id: 3, item_text: 'Pune' },
-      { item_id: 4, item_text: 'Navsari' }
-    ];
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
-      allowSearchFilter: true
-    };
+    //Login Logout Check
+    let loggedInX = localStorage.getItem('loggedInUser')
+    if (loggedInX !== null) {
+      this.loggedInDetails = JSON.parse(loggedInX);
+      this.loggedInUserID = Number(this.loggedInDetails.id)
+      this.loggedIn = true
+    } else {
+      this.loggedIn = false
+    }
   }
 
   loadProjects() {
-    /* this._projectService.getActiveProject().subscribe((res:any)=>{
-      if(res.status == 'ok'){
-        this.projectList = res.data;
+    this._projectService.getProjects().subscribe((res: any) => {
+      if (res.status == 1) {
+        this.projectList = res.projects
+        console.log("Project list: ", this.projectList)
+      } else {
+        this.projectList = [];
       }
-    }) */
-
-    let projectListX:any = localStorage.getItem('projects')
-    this.projectList = JSON.parse(projectListX)
-    console.log("Project List",this.projectList)
+    })
   }
 
-  openProject(id:number){
+  openProject(id: number) {
     this.router.navigate(['/project-detail', id])
   }
 
@@ -87,8 +80,74 @@ export class ProjectsComponent implements OnInit {
   }
 
 
-  searchFilters(){
-    console.log("From: ", this.fromDate)
+  reset() {
+    this.loadProjects();
+  }
+
+
+  upVoteProject(projectId: any) {
+    let project = this.projectList.find((x: any) => x.projectId == projectId)
+    if (!this.loggedIn) {
+      this.allowedToVote = true
+      var _popup = this.dialog.open(LoginComponent, {
+        width: '60%',
+        data: {
+          title: "Login"
+        }
+      })
+    } else {
+      this.allowedToVote = false
+      if (!project.upVotes.includes(this.loggedInUserID)) {
+        let payLoad: any = {
+          "projectId": projectId,
+          "userId": this.loggedInUserID
+        }
+        this._projectService.upVoteProject(payLoad).subscribe((res: any) => {
+          if (res.status == 1) {
+            let objIndex = this.projectList.findIndex(obj => obj.projectId == res.project.projectId)
+            this.projectList[objIndex] = res.project
+          } else {
+            alert("Up vote unsucessfull");
+          }
+        })
+      } 
+    }
+  }
+
+  downVoteProject(projectId: any) {
+    let project = this.projectList.find((x: any) => x.projectId == projectId)
+    if (!this.loggedIn) {
+      this.allowedToVote = true
+      var _popup = this.dialog.open(LoginComponent, {
+        width: '60%',
+        data: {
+          title: "Login"
+        }
+      })
+    } else {
+      this.allowedToVote = false
+      if (!project.downVotes.includes(this.loggedInUserID)) {
+        let payLoad: any = {
+          "projectId": projectId,
+          "userId": this.loggedInUserID
+        }
+        this._projectService.downVoteProject(payLoad).subscribe((res: any) => {
+          if (res.status == 1) {
+            let objIndex = this.projectList.findIndex(obj => obj.projectId == res.project.projectId)
+            this.projectList[objIndex] = res.project
+          } else {
+            alert("Down vote unsucessfull");
+          }
+        })
+      }
+    }
+  }
+
+
+  getSearchedProjects() {
+    if (this.searchProject != "") {
+      console.log(this.searchProject)
+    }
   }
 
 }

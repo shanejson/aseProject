@@ -10,6 +10,11 @@ import { CreateProjectComponent } from './create-project/create-project.componen
 import { CitizenProjectsComponent } from './citizen-projects/citizen-projects.component';
 import { CitizenActivityComponent } from './citizen-activity/citizen-activity.component';
 import { GovtDashboardComponent } from './govt-dashboard/govt-dashboard.component';
+import { QuizComponent } from './quiz/quiz.component';
+import { EventsComponent } from './events/events.component';
+import { CreateEventComponent } from './create-event/create-event.component';
+import { EventListComponent } from './event-list/event-list.component';
+import { EventDetailsComponent } from './event-details/event-details.component';
 
 export const routes: Routes = [
     {path:'', redirectTo:'home', pathMatch:'full'},
@@ -24,5 +29,10 @@ export const routes: Routes = [
     {path:'my-project', component: CitizenProjectsComponent},
     {path: 'my-activity', component: CitizenActivityComponent},
     {path: 'govt-dashboard', component: GovtDashboardComponent},
+    {path: 'quiz', component: QuizComponent},
+    {path:'events-list', component: EventsComponent},
+    {path:'create-event', component: CreateEventComponent},
+    {path:'events', component: EventListComponent},
+    {path:'event-detail/:eventId', component: EventDetailsComponent},
     {path: '**', component:HomeComponent}
 ];

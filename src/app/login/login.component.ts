@@ -1,13 +1,24 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, Inject } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProjectService } from '../service/project.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { RxReactiveFormsModule, RxwebValidators } from '@rxweb/reactive-form-validators';
+import { MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    MatDialogModule,
+    ReactiveFormsModule,
+    RxReactiveFormsModule,
+    NgMultiSelectDropDownModule,
     FormsModule,
     CommonModule
   ],
@@ -16,51 +27,54 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  loginObj: any = {
-    email: "",
-    password:""
-  }
+  showLogin: boolean = true
+  loginForm!: FormGroup
+  spinner: boolean = false
+  incompleteForm: boolean = false;
 
-  userList:any
-
-  constructor(private _projectService: ProjectService, private router: Router){
-    this.userList = localStorage.getItem('users');
-    console.log(this.userList)
-    this.userList = JSON.parse(this.userList);
-    console.log("USers: ", this.userList)
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private _projectService: ProjectService, 
+    private router: Router,
+    private ref:MatDialogRef<LoginComponent>
+  ){
+    this.loginForm = new FormGroup({
+      email: new FormControl('', [RxwebValidators.email(),RxwebValidators.required() ]),
+      password: new FormControl('', [RxwebValidators.required()]), 
+    })
   }
 
   onLogin(){
-    console.log("USers: ", this.userList)
-    console.log(this.loginObj.email)
-    let userCheck = this.userList.find((x:any)=>{
-      x.email == this.loginObj.email
-    })
-    console.log(userCheck)
-    // let obj:any = this.userList.find((x: { email: any; })=>x.email = this.loginObj.email)
-    // console.log("OBJ: ", obj)
-
-
-    /* if(this.loginObj.email == 'admin@team14.com' && this.loginObj.password == '12345678'){
-      localStorage.setItem('loggedInUser', JSON.stringify({email: this.loginObj.email, role:'govt'}));
-      alert('Login Succesful.');
-      this.router.navigateByUrl('/projects');
-    }
-    else if(this.loginObj.email == 'citizen@team14.com' && this.loginObj.password == '12345678'){
-      localStorage.setItem('loggedInUser', JSON.stringify({email: this.loginObj.email, role:'citizen'}));
-      alert('Login Succesful.');
-      this.router.navigateByUrl('/projects');
+    if(this.loginForm.status == "INVALID"){
+      this.incompleteForm = true
+      //return ;
     }else{
-      alert('Invalid Credentials.');
-    } */
-    
-    /* this._projectService.registerCitizen(this.loginObj).subscribe((res:any)=>{
-      if(res.status == 'ok'){
-        alert("Login Succesfully.")
+      this.incompleteForm = false
+      let payLoad: any = this.loginForm.getRawValue();
+      this._projectService.login(payLoad).subscribe((res:any)=>{
+      if(res.status == 1){
+        alert("Login Sucessfull.")
+        let loggedInUserDetails = res.userInfo;
+        loggedInUserDetails.email = payLoad.email;
+        localStorage.setItem('loggedInUser', JSON.stringify(loggedInUserDetails));
+        //this.router.navigate(['/projects'])
+        this.closepopup();
+        window.location.reload()
       }else{
         alert("Login Not Succesfull.")
       }
-    }) */
+    })
+    }
+    
+  }
+
+  closepopup(){
+    this.ref.close();
+  }
+
+  openSignUp(){
+    this.router.navigate(['/citizen-register'])
+    this.closepopup();
   }
 
 }

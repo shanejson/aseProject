@@ -1,56 +1,86 @@
-<div class="container">
+<div class="card container pt-6">
   <div class="row">
-    <div class="col-3 bg-white">
+    <!-- <div class="col-3 bg-white">
       Image
-    </div>
-    <div class="col-9">
-      <h1>New Project Form</h1>
-      <form>
-        <div class="form-group">
-          <label for="projectName">Project Name</label>
-          <input [(ngModel)]="newProjectObj.projectName" [ngModelOptions]="{standalone: true}" type="text"
-            class="form-control" id="projectName" placeholder="Enter Project Name">
-        </div>
-        <div class="form-group">
-          <label for="projectDepartment">Select Project Department</label>
-          <select class="form-control" [(ngModel)]="newProjectObj.projectDepartmentId"
-            [ngModelOptions]="{standalone: true}">
-            <option value="" selected>Select Department</option>
-            <option *ngFor="let dept of departmentList" [value]="dept.departmentId">{{dept.departmentName}}</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="projectAddress">Project Address</label>
-          <input [(ngModel)]="newProjectObj.projectAddress" [ngModelOptions]="{standalone: true}" type="text"
-            class="form-control" id="projectAddress" placeholder="Enter Project Address">
-        </div>
-        <div class="form-group">
-          <label for="projectCity">Project City</label>
-          <input [(ngModel)]="newProjectObj.projectCity" [ngModelOptions]="{standalone: true}" type="text"
-            class="form-control" id="projectCity" placeholder="Enter Project City">
-        </div>
-        <div class="form-group">
-          <label for="projectState">Project State</label>
-          <input [(ngModel)]="newProjectObj.projectState" [ngModelOptions]="{standalone: true}" type="text"
-            class="form-control" id="projectState" placeholder="Enter Project State">
-        </div>
-        <div class="form-group">
-          <label for="projectDuration">Project Duration</label>
-          <input [(ngModel)]="newProjectObj.projectDuration" [ngModelOptions]="{standalone: true}" type="text"
-            class="form-control" id="projectDuration" placeholder="Enter Project Duration">
-        </div>
-        <div class="form-group">
-          <label for="projectBudget">Project Budget</label>
-          <input [(ngModel)]="newProjectObj.projectBudget" [ngModelOptions]="{standalone: true}" type="text"
-            class="form-control" id="projectBudget" placeholder="Enter Project Budget">
+    </div> -->
+    <div class="col-12 content">
+      <div class="card-header card-header-danger">
+        <h4 class="card-title">{{"Create a new Project" | translate}}</h4>
+      </div>
+
+      <form [formGroup]="newProjectForm">
+        <div class="form-group mt-2 ">
+          <label for="name">Project Name</label>
+          <input type="text" formControlName="name" class="form-control" id="name" placeholder="Enter Name">
+          <small class="text-danger" *ngIf="newProjectForm.get('name')?.invalid && newProjectForm.get('name')?.touched">Name is required</small>
         </div>
 
-        <div class="form-group form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
-          <label class="form-check-label" for="exampleCheck1">I agree to terms & conditions</label>
+        <!-- Department -->
+        <div class="form-group mt-2 ">
+          <label for="department">Project Department</label>
+          <select class="form-select" id="department" formControlName="department">
+            <option selected disabled value="null">Select Department</option>
+            <option *ngFor="let item of departmentList" [value]="item.name">{{item.name}}</option>
+          </select>
+          <small class="text-danger" *ngIf="newProjectForm.get('department')?.invalid && newProjectForm.get('department')?.touched">Department is required</small>
         </div>
-        <button type="submit" class="btn btn-primary" (click)="onCreateProject()">Submit</button>
+
+        <!-- City -->
+        <div class="form-group mt-2 ">
+          <label for="city">Project City</label>
+          <select class="form-select" id="city" formControlName="city">
+            <option selected disabled value="null">Select City</option>
+            <option *ngFor="let item of cities" [value]="item.name">{{item.name}}</option>
+          </select>
+          <small class="text-danger" *ngIf="newProjectForm.get('city')?.invalid && newProjectForm.get('city')?.touched">City is required</small>
+        </div>
+
+        
+
+        <!-- Duration -->
+        <div class="form-group mt-2 ">
+          <label for="duration">Project Duration</label>
+          <span> (Specify in months or year)</span>
+          <input type="text" formControlName="duration" class="form-control" id="duration" placeholder="Enter Duration">
+          <small class="text-danger" *ngIf="newProjectForm.get('duration')?.invalid && newProjectForm.get('duration')?.touched">Duration is required</small>
+        </div>
+
+        <!-- Budget -->
+        <div class="form-group mt-2 ">
+          <label for="budget">Project Budget</label>
+          <input type="text" formControlName="budget" class="form-control" id="budget" placeholder="Enter Budget">
+          <small class="text-danger" *ngIf="newProjectForm.get('budget')?.invalid && newProjectForm.get('budget')?.touched">Budget is required</small>
+        </div>
+
+        <!-- project start date -->
+        <div class="form-group mt-2 ">
+          <label for="projectStartDate">Project Start Date</label>
+          <input type="date" formControlName="projectStartDate" class="form-control" id="dob" placeholder="Enter Date">
+          <small class="text-danger" *ngIf="newProjectForm.get('projectStartDate')?.invalid && newProjectForm.get('projectStartDate')?.touched">Start Date is required</small>
+        </div>
+
+        <!-- Image -->
+      <!-- <div class="form-group mt-2 ">
+        <label for="featuredImage">Featured Image</label>
+        <input type="file" class="form-control" (change)="uploadImage($event)" >
+      </div> -->
+
+        <!-- Description -->
+        <div class="form-group mt-2 ">
+          <label for="description">Project Description</label>
+          <textarea class="form-control" formControlName="description" id="description" rows="3"></textarea>
+          <small class="text-danger" *ngIf="newProjectForm.get('description')?.invalid && newProjectForm.get('description')?.touched">Description is required</small>
+        </div>
+
+        <!-- Action Buttons -->
+        <button type="submit" class="btn btn-primary mt-2" style="margin-right: 10px;" (click)="onCreateProject()">Submit</button>
+        <button type="submit" class="btn btn-danger mt-2" (click)="reset()">Reset</button>
+
+        <div class="alert alert-danger mt-2" *ngIf="incompleteForm">
+          Please fill out form correctly
+        </div>
       </form>
+      
     </div>
   </div>
 </div>
